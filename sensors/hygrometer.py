@@ -26,10 +26,7 @@ class Hygrometer(Thread):
 
     def run(self):
         while self.running:
-            print(super().name)
-            
             self.read_data()
-
             if handler.SIGINT:
                 self.running = False
                 break
@@ -38,8 +35,8 @@ class Hygrometer(Thread):
         try:
             temperature_c = self.dev.temperature
             humidity = self.dev.humidity
-            print("Temp: {:.1f} C    Humidity: {}% ".format(
-                    temperature_c, humidity))
+            print("Sensor: {} Temp: {:.1f} C    Humidity: {}% ".format(
+                    super().name, temperature_c, humidity))
 
         except RuntimeError as error:
             print(error.args[0])
@@ -47,5 +44,5 @@ class Hygrometer(Thread):
             self.dev.exit()
             raise error
 
-        time.sleep(5.0)
+        time.sleep(1.0)
 
