@@ -2,7 +2,6 @@
 This module reads data from RPi sensors - real-time\
 '''
 import logging
-from constants import *
 from sensors.hygrometer import *
 from sensors.thermometer import *
 from sensors.barometer import *
