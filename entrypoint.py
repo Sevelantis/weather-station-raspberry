@@ -21,3 +21,5 @@ if __name__ == '__main__':
     # join devices threads
     for sensor in sensors:
         sensor.join()
+
+    logging.info('all threads joined.')
