@@ -1,0 +1,33 @@
+version: '3.6'
+
+services:
+    mqtt:
+        container_name: mqtt
+        build: ./mqtt/
+        ports:
+            - '9001:9001'
+            - '1883:1883'
+        volumes:
+            - './mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf'
+        
+    influxdb:
+        container_name: influxdb
+        build: ./influxdb/
+        ports:
+            - 8086:8086
+        volumes:
+            # - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+            - ./influxdb/data:/var/lib/influxdb
+        restart: on-failure
+        healthcheck:
+            test: ["CMD", "curl", "-sI", "http://127.0.0.1:8086/ping"]
+            interval: 30s
+            timeout: 1s
+            retries: 24
+    
+    telegraf:
+        container_name: telegraf
+        image: telegraf
+        volumes: 
+            - './telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro'
+    
