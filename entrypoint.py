@@ -21,4 +21,4 @@ if __name__ == '__main__':
     for sensor in sensors:
         sensor.join()
 
-    logging.info('all threads joined.')
+    logging.info('EXIT SUCCESS')
