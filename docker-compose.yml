@@ -21,7 +21,7 @@ services:
             - '8090:8090'
         volumes:
             - ./influxdb/data:/data
-            - ./influxdb/init:/docker-entrypoint-initdb.d # PRE_CREATE_DB
+            - ./influxdb:/docker-entrypoint-initdb.d # PRE_CREATE_DB
         env_file: 
             - ./.env
         environment:
