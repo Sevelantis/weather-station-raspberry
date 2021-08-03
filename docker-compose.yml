@@ -2,15 +2,15 @@ version: '3.6'
 
 services:
 
-    # mqtt:
-    #     container_name: mqtt
-    #     image: eclipse-mosquitto
-    #     ports:
-    #         - '9001:9001'
-    #         - '1883:1883'
-    #     volumes:
-    #         - './mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf'
-    #     restart: on-failure
+    mqtt:
+        container_name: mqtt
+        image: eclipse-mosquitto
+        ports:
+            - '9001:9001'
+            - '1883:1883'
+        volumes:
+            - './mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf'
+        restart: on-failure
 
     influxdb:
         container_name: influxdb
@@ -39,15 +39,15 @@ services:
         image: chronograf
         ports:
             - '8888:8888'
-        depends_on: 
-            - influxdb
         restart: on-failure
         environment: 
             - INFLUXDB_URL=http://influxdb:8086 # needs to match container_name
             - INFLUXDB_USERNAME=${INFLUXDB_USERNAME} # sourced from .env
             - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD} # sourced from .env
+        depends_on: 
+            - influxdb
 
-    telegraf:
+    telegraf: # consider telegraf cpu/mem monitoring..
         container_name: telegraf
         image: telegraf
         ports:
