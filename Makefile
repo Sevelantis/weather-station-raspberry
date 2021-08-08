@@ -16,3 +16,6 @@ clean:
 telegraf_conf:
 	docker run --rm telegraf telegraf config > telegraf/telegraf.conf
 
+influxdb_conf:
+	docker run --rm hypriot/rpi-influxdb influxd config > influxdb/influxdb.conf
+	sed -i 's/^  auth-enabled = false$$/  auth-enabled = true/g' influxdb/influxdb.conf

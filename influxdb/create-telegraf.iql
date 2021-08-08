@@ -1,3 +1,0 @@
-CREATE DATABASE sensors
-CREATE USER 'telegraf' WITH PASSWORD 'telegraf123'
-GRANT ALL ON sensors TO telegraf

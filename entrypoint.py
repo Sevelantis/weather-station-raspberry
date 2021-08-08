@@ -6,19 +6,25 @@ from sensors.hygrometer import *
 from sensors.thermometer import *
 from sensors.barometer import *
 from sensors.gas_sensor import *
+from mqtt.publisher import *
+from mqtt.broker import *
 
-# setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(name)s:%(message)s ')
 
 if __name__ == '__main__':
-    sensors = [Hygrometer(), Thermometer(), Barometer(), Gas_sensor()]
-    
-    # run devices threads
-    for sensor in sensors:
-        sensor.start()
-    
-    # join devices threads
-    for sensor in sensors:
-        sensor.join()
+    # broker = Broker()
+    publisher = Publisher()
 
-    logging.info('EXIT SUCCESS')
+    publisher.publish('HELLO WORLD KURWA  c:     //')
+
+    # sensors = [Hygrometer(), Thermometer(), Barometer(), Gas_sensor()]
+    
+    # # run devices threads
+    # for sensor in sensors:
+    #     sensor.start()
+    
+    # # join devices threads
+    # for sensor in sensors:
+    #     sensor.join()
+
+    # logging.info('EXIT SUCCESS')
