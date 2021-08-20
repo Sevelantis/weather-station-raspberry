@@ -15,7 +15,7 @@ if __name__ == '__main__':
     # broker = Broker()
     publisher = Publisher()
 
-    publisher.publish('HELLO WORLD KURWA  c:     //')
+    publisher.publish('HELLO WORLD  c:     //')
 
     # sensors = [Hygrometer(), Thermometer(), Barometer(), Gas_sensor()]
     

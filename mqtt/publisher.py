@@ -39,7 +39,7 @@ class Publisher:
             logging.info('Was already connected to MQTT.')
             self.connected = True
         else:
-            logging.info('MQTT connection failed.')
+            logging.info('MQTT connection failed.')l
 
     def publish(self, msg):
         self.mqtt.publish('/home/pi/weather-station/data', msg)
