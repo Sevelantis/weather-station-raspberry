@@ -7,15 +7,17 @@ from sensors.thermometer import *
 from sensors.barometer import *
 from sensors.gas_sensor import *
 from mqtt.publisher import *
-from mqtt.broker import *
-
+from mqtt.catcher import *
+import random
 logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(name)s:%(message)s ')
 
 if __name__ == '__main__':
-    # broker = Broker()
+    logging.info('elo..')
     publisher = Publisher()
 
-    publisher.publish('HELLO WORLD  c:     //')
+    while 1:
+        time.sleep(1)
+        publisher.publish(f'my random number is :) {str(random.randint(-20,20))}')
 
     # sensors = [Hygrometer(), Thermometer(), Barometer(), Gas_sensor()]
     

@@ -16,9 +16,7 @@ services:
         container_name: influxdb
         image: hypriot/rpi-influxdb:latest
         ports:
-            - '8083:8083'
             - '8086:8086'
-            - '8090:8090'
         volumes:
             - ./influxdb/data:/data
             - ./influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
@@ -30,6 +28,16 @@ services:
             - PRE_CREATE_DB='CREATE DATABASE sensors'    
         restart: on-failure
 
+    grafana:
+        container_name: grafana
+        image: grafana/grafana
+        volumes: 
+            # - ./grafana/plugins:/var/lib/grafana/plugins
+            - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+        ports:
+            - '3000:3000'
+        user: root
+        
     # chronograf: # influxdb admin UI
     #     container_name: chronograf
     #     image: chronograf
@@ -43,19 +51,4 @@ services:
     #     depends_on: 
     #         - influxdb
 
-    # telegraf: # consider telegraf cpu/mem monitoring..
-    #     container_name: telegraf
-    #     image: telegraf
-    #     ports:
-    #         - '8092:8092'
-    #         - '8094:8094'
-    #         - '8125:8125'
-    #     volumes: 
-    #         - './telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro'
-    #     restart: on-failure
 
-    # grafana:
-    #     container_name: grafana
-    #     image: grafana/grafana
-    #     ports:
-    #         - '3000:3000'

@@ -11,8 +11,6 @@ INFLUXDB_DATABASE = 'sensors'
 
 MQTT_ADDRESS = 'localhost'
 MQTT_PORT = 1883
-MQTT_USER = 'root'
-MQTT_PASSWORD = 'mqtt123!'
 MQTT_TOPIC = 'home/+/+'
 MQTT_REGEX = 'home/([^/]+)/([^/]+)'
 MQTT_CLIENT_ID = 'mqtt_to_influxdb_publisher'
@@ -21,11 +19,19 @@ logging.basicConfig(level=logging.INFO, format='Broker: %(message)s ')
 
 class Broker:
     def __init__(self):
+        logging.info('init')
         # self._init_influxdb_database()
         self.connected = False
         self.received = False
         self._init_mqtt()
 
+    def _init_mqtt(self):
+        self.mqtt = mqtt.Client(MQTT_CLIENT_ID)
+        self.mqtt.loop_stop()
+        self.mqtt.on_connect = self.on_connect
+        self.mqtt.on_message = self.on_message
+        self.mqtt.connect(MQTT_ADDRESS, MQTT_PORT)
+        self.mqtt.loop_start()
         while self.connected != True:
             time.sleep(.2)
         while self.received != True:
@@ -33,21 +39,12 @@ class Broker:
 
         self.mqtt.loop_stop()
 
-    def _init_mqtt(self):
-        self.mqtt = mqtt.Client(MQTT_CLIENT_ID)
-        self.mqtt.loop_stop()
-        self.mqtt.username_pw_set(MQTT_USER, MQTT_PASSWORD)
-        self.mqtt.on_connect = self.on_connect
-        self.mqtt.on_message = self.on_message
-        self.mqtt.connect(MQTT_ADDRESS, MQTT_PORT)
-        self.mqtt.loop_start()
-
     def on_connect(self, client, userdata, flags, rc):
-        print('Connected with result code ' + str(rc))
+        print(f'Connected with RC = {rc}')
         if rc == 0:
             self.connected = True
             client.subscribe('/home/pi/weather-station/data')
-            logging.info('Broker was already connected to MQTT.')
+            logging.info(f'Broker was already connected to MQTT. RC = {rc}')
         else:
             logging.info('Broker MQTT connection failed.')
 

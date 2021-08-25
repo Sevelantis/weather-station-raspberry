@@ -2,7 +2,7 @@
 NAME thermometer module.
 '''
 from threading import *
-from handler.signal_handler import handler
+from signal_handler import handler
 import time
 
 class Thermometer(Thread):

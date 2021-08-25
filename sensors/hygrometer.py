@@ -11,7 +11,7 @@ PINOUT:
 Inserted 10K Ohm pull-up resistor binding together VCC and SIG.
 '''
 from threading import *
-from handler.signal_handler import handler
+from signal_handler import handler
 import time
 import board
 import adafruit_dht

@@ -8,6 +8,7 @@ class SIGINT_handler():
     def signal_handler(self, signal, frame):
         print('You pressed Ctrl+C!')
         self.SIGINT = True
+        exit()
 
 handler = SIGINT_handler()
 signal.signal(signal.SIGINT, handler.signal_handler)

@@ -2,7 +2,7 @@
 NAME gas_sensor module.
 '''
 from threading import *
-from handler.signal_handler import handler
+from signal_handler import handler
 import time
 
 class Gas_sensor(Thread):

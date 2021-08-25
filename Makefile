@@ -7,6 +7,10 @@ up:
 down:
 	docker-compose down
 
+restart:
+	make down
+	make up
+
 clean:
 	docker rmi -f $(shell docker images -aq)
 	docker rm -f $(shell docker ps -aq)
