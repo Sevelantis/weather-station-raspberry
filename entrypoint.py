@@ -12,7 +12,6 @@ import random
 logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(name)s:%(message)s ')
 
 if __name__ == '__main__':
-    logging.info('elo..')
     publisher = Publisher()
 
     catcher = Catcher()
@@ -23,8 +22,8 @@ if __name__ == '__main__':
         if handler.SIGINT:
             running = False
             break
-        time.sleep(0.02)
-        publisher.publish(f'my random number is :) {str(random.randint(-20,20))}')
+        time.sleep(0.5)
+        publisher.publish(random.randint(0,1000))
 
     catcher.join()
     # sensors = [Hygrometer(), Thermometer(), Barometer(), Gas_sensor()]

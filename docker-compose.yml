@@ -38,17 +38,17 @@ services:
             - '3000:3000'
         user: root
         
-    # chronograf: # influxdb admin UI
-    #     container_name: chronograf
-    #     image: chronograf
-    #     ports:
-    #         - '8888:8888'
-    #     restart: on-failure
-    #     environment: 
-    #         - INFLUXDB_URL=http://influxdb:8086 # needs to match container_name
-    #         - INFLUXDB_USERNAME=${INFLUXDB_USERNAME} # sourced from .env
-    #         - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD} # sourced from .env
-    #     depends_on: 
-    #         - influxdb
+    chronograf: # influxdb admin UI
+        container_name: chronograf
+        image: chronograf
+        ports:
+            - '8888:8888'
+        restart: on-failure
+        environment: 
+            - INFLUXDB_URL=http://influxdb:8086 # needs to match container_name
+            - INFLUXDB_USERNAME=${INFLUXDB_USERNAME} # sourced from .env
+            - INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD} # sourced from .env
+        depends_on: 
+            - influxdb
 
 
