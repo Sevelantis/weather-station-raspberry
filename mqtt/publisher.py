@@ -4,13 +4,13 @@ from typing import NamedTuple
 import paho.mqtt.client as mqtt
 import logging
 
+logging.basicConfig(level=logging.INFO, format='Publisher: %(message)s ')
+
 MQTT_ADDRESS = 'localhost'
 MQTT_PORT = 1883
 MQTT_TOPIC = 'home/+/+'
 MQTT_REGEX = 'home/([^/]+)/([^/]+)'
 MQTT_CLIENT_ID = 'publish_sensor_data_to_broker'
-
-logging.basicConfig(level=logging.INFO, format='Publisher: %(message)s ')
 
 class Publisher:
     def __init__(self):
@@ -31,7 +31,7 @@ class Publisher:
     def on_connect(self, client, userdata, flags, rc):
         print(f'Connected with RC = {rc}')
         if rc == 0:
-            logging.info('Was already connected to MQTT.')
+            logging.info(f'Was already connected to MQTT. RC = {rc}')
             self.connected = True
         else:
             logging.info(f'MQTT connection failed. RC = {rc}')

@@ -1,7 +1,11 @@
 import paho.mqtt.client as mqtt
+from threading import *
+from signal_handler import handler
 import time
 import logging
 from influxdb import InfluxDBClient
+
+logging.basicConfig(level=logging.INFO, format='Catcher: %(message)s ')
 
 INFLUXDB_ADDRESS = 'localhost'
 INFLUXDB_PORT = 8086
@@ -15,10 +19,11 @@ MQTT_TOPIC = 'home/+/+'
 MQTT_REGEX = 'home/([^/]+)/([^/]+)'
 MQTT_CLIENT_ID = 'mqtt_to_influxdb_publisher'
 
-logging.basicConfig(level=logging.INFO, format='Broker: %(message)s ')
-
-class Broker:
+class Catcher(Thread):
     def __init__(self):
+        super().__init__()
+        self.name = 'HYG'
+        self.running = True
         logging.info('init')
         # self._init_influxdb_database()
         self.connected = False
@@ -34,19 +39,15 @@ class Broker:
         self.mqtt.loop_start()
         while self.connected != True:
             time.sleep(.2)
-        while self.received != True:
-            time.sleep(.2)
-
-        self.mqtt.loop_stop()
 
     def on_connect(self, client, userdata, flags, rc):
         print(f'Connected with RC = {rc}')
         if rc == 0:
             self.connected = True
             client.subscribe('/home/pi/weather-station/data')
-            logging.info(f'Broker was already connected to MQTT. RC = {rc}')
+            logging.info(f'Catcher was already connected to MQTT. RC = {rc}')
         else:
-            logging.info('Broker MQTT connection failed.')
+            logging.info(f'Catcher MQTT connection failed. RC = {rc}')
 
     def on_message(self, client, userdata, msg):
         logging.info('msg received - > ' + msg.topic + ' ' + str(msg.payload.decode('utf-8')))
@@ -58,5 +59,16 @@ class Broker:
     #     self.influxdb_client = InfluxDBClient(INFLUXDB_ADDRESS, INFLUXDB_PORT, INFLUXDB_USER, INFLUXDB_PASSWORD, None)
     #     self.influxdb_client.switch_database(INFLUXDB_DATABASE)
     
-if __name__ == '__main__':
-    broker = Broker()
+    def run(self):
+        while self.running:
+            if handler.SIGINT:
+                self.running = False
+                break
+            time.sleep(0.02)
+
+        # on quit
+        self.mqtt.loop_stop()
+
+
+# if __name__ == '__main__':
+#     Catcher = Catcher()

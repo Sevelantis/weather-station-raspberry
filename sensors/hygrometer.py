@@ -33,7 +33,6 @@ class Hygrometer(Thread):
                 
     def read_data(self):
         try:
-            
             temperature_c = self.dev.temperature
             humidity = self.dev.humidity
             print("Sensor: {} Temp: {:.1f} C    Humidity: {}% ".format(

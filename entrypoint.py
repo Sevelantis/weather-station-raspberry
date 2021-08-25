@@ -15,10 +15,18 @@ if __name__ == '__main__':
     logging.info('elo..')
     publisher = Publisher()
 
-    while 1:
-        time.sleep(1)
+    catcher = Catcher()
+    catcher.start()
+
+    running = True
+    while running:
+        if handler.SIGINT:
+            running = False
+            break
+        time.sleep(0.02)
         publisher.publish(f'my random number is :) {str(random.randint(-20,20))}')
 
+    catcher.join()
     # sensors = [Hygrometer(), Thermometer(), Barometer(), Gas_sensor()]
     
     # # run devices threads
