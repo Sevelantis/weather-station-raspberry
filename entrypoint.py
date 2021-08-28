@@ -17,23 +17,23 @@ if __name__ == '__main__':
     catcher = Catcher()
     catcher.start()
 
-    running = True
-    while running:
-        if handler.SIGINT:
-            running = False
-            break
-        time.sleep(0.5)
-        publisher.publish(random.randint(0,1000))
+    # running = True
+    # while running:
+    #     if handler.SIGINT:
+    #         running = False
+    #         break
+    #     time.sleep(0.5)
+    #     publisher.publish('/home/pi/weather-station/data/test', random.randint(0,1000))
+
+    # sensors = [Hygrometer(publisher), Thermometer(publisher), Barometer(publisher), Gas_sensor(publisher)]
+    sensors = [Hygrometer(publisher)]
+    # run devices threads
+    for sensor in sensors:
+        sensor.start()
+    
+    # join devices threads
+    for sensor in sensors:
+        sensor.join()
 
     catcher.join()
-    # sensors = [Hygrometer(), Thermometer(), Barometer(), Gas_sensor()]
-    
-    # # run devices threads
-    # for sensor in sensors:
-    #     sensor.start()
-    
-    # # join devices threads
-    # for sensor in sensors:
-    #     sensor.join()
-
-    # logging.info('EXIT SUCCESS')
+    logging.info('EXIT SUCCESS')

@@ -2,6 +2,8 @@ import paho.mqtt.client as mqtt
 from threading import *
 from signal_handler import handler
 import time
+import random
+import string
 import logging
 from influxdb import InfluxDBClient
 
@@ -45,15 +47,14 @@ class Catcher(Thread):
         print(f'Connected with RC = {rc}')
         if rc == 0:
             self.connected = True
-            client.subscribe('/home/pi/weather-station/data/test')
+            client.subscribe('/+')
             logging.info(f'Catcher was already connected to MQTT. RC = {rc}')
         else:
             logging.info(f'Catcher MQTT connection failed. RC = {rc}')
 
     def on_message(self, client, userdata, msg):
-        logging.info('msg received - > ' + msg.topic + ' ' + str(msg.payload.decode('utf-8')))
+        logging.info('msg received. Topic: ' + msg.topic + ' Msg: ' + str(msg.payload.decode('utf-8')))
         data = self._parse_msg(msg.topic, msg.payload.decode('utf-8'))
-        # TODO KNOW INFLUXDB DATA FORMAT TO SEND
         if data is not None:
             self._send_data_to_influxdb(data)
 
@@ -61,20 +62,14 @@ class Catcher(Thread):
         self.influxdb_agent.write_points(data, database=INFLUXDB_DATABASE, time_precision='ms', batch_size=10000, protocol='line')
 
     def _parse_msg(self, topic, msg):
-        import random
         data = []
-        data.append("{measurement},location={location},fruit={fruit},id={id} x={x},y={y},a={a},b={b},c={c},d={d},e={e}i {timestamp}"
+        fields = msg.split(',') # location,sensor_id,value
+        data.append("{measurement},location={location},sensor_id={sensor_id},type={type} value={value}i {timestamp}"
             .format(measurement=topic,
-                    location='Wrocław',
-                    fruit='testfruit',
-                    id='testtag',
-                    x=random.randint(0,100),
-                    y=random.randint(100,150),
-                    a=random.randint(250,444),
-                    b=random.randint(300,600),
-                    c=random.randint(500,700),
-                    d=random.randint(700,800),
-                    e=random.randint(799,899),
+                    location=fields[0],
+                    sensor_id=fields[1],
+                    type=fields[2],
+                    value=fields[3],
                     timestamp=int(time.time_ns()/1000000)))
         return data
 

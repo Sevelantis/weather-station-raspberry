@@ -27,16 +27,6 @@ services:
             - INFLUXDB_INIT_PWD=${INFLUXDB_PASSWORD} # sourced from .env
             - PRE_CREATE_DB='CREATE DATABASE sensors'    
         restart: on-failure
-
-    grafana:
-        container_name: grafana
-        image: grafana/grafana
-        volumes: 
-            # - ./grafana/plugins:/var/lib/grafana/plugins
-            - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-        ports:
-            - '3000:3000'
-        user: root
         
     chronograf: # influxdb admin UI
         container_name: chronograf
@@ -51,4 +41,12 @@ services:
         depends_on: 
             - influxdb
 
-
+    grafana:
+        container_name: grafana
+        image: grafana/grafana
+        volumes: 
+            - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+            - ./grafana/data:/var/lib/grafana
+        ports:
+            - '3000:3000'
+        user: root

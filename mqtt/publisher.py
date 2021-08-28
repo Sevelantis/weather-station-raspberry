@@ -36,9 +36,8 @@ class Publisher:
         else:
             logging.info(f'MQTT connection failed. RC = {rc}')
 
-    def publish(self, msg):
-        self.mqtt.publish('/home/pi/weather-station/data/test', msg)
-
+    def publish(self, topic, msg):
+        self.mqtt.publish(topic, msg)
         
     def on_publish(self, client, data, result):
-        logging.info(f'data published, msg = {result}')
+        logging.info(f'Send counter: {result}')

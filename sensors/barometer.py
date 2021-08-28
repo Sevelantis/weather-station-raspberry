@@ -10,6 +10,7 @@ class Barometer(Thread):
         super().__init__()
         self.name = 'BAR'
         self.running = True
+
     def run(self):
         while self.running:
             # print(super().name)
@@ -22,3 +23,5 @@ class Barometer(Thread):
     
     def read_data(self):
         time.sleep(5.0)
+        # send to grafana
+        
