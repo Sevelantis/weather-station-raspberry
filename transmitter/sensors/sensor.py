@@ -1,6 +1,6 @@
 from DTO.message import Message, LoggingStage
 from sig.signal_handler import handler
-from observers.observable import Observable, ObserversList
+from observers.observable import Observable
 from threading import *
 
 class Sensor(Thread, Observable):
@@ -22,4 +22,4 @@ class Sensor(Thread, Observable):
         sensor_data = self.get_sensor_data()
         if sensor_data:
             for type, value in sensor_data:
-                self.notify_observer(self.build_message(type=type, value=value, logging_stage=LoggingStage.COLLECTED.value), ObserversList.PUBLISHER)
+                self.notify_observers(self.build_message(type=type, value=value, logging_stage=LoggingStage.COLLECTED.value))

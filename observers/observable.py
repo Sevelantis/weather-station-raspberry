@@ -1,9 +1,5 @@
 from enum import Enum
 
-class ObserversList(Enum):
-    PUBLISHER = 'PUB'
-    LOGGER = 'LOG'
-
 class Observer:
     def __init__(self, name) -> None:
         self.name = name
@@ -24,7 +20,3 @@ class Observable:
         for observer in self.observers:
             observer.notify(data)
 
-    def notify_observer(self, data, name) -> None:
-        for observer in self.observers:
-            if observer.name == name:
-                observer.notify(data)

@@ -7,7 +7,7 @@ import string
 import logging
 from influxdb import InfluxDBClient
 from DTO.message import Message, LoggingStage
-from observers.observable import Observable, ObserversList
+from observers.observable import Observable
 
 INFLUXDB_ADDRESS = 'localhost'
 INFLUXDB_PORT = 8086
@@ -32,11 +32,11 @@ class Catcher(Thread, Observable):
         self._init_mqtt()
 
     def on_message(self, client, userdata, json) -> None:
-        message = Message()
-        message.deserialize(json.payload.decode('utf-8'))
-        message.logging_stage=LoggingStage.RECEIVED.value
-        self._send_data_to_influxdb(message)
-        self.notify_observer(message, ObserversList.LOGGER)
+        msg = Message()
+        msg.deserialize(json.payload.decode('utf-8'))
+        msg.logging_stage=LoggingStage.RECEIVED.value
+        self._send_data_to_influxdb(msg)
+        self.notify_observers(msg)
 
     def _send_data_to_influxdb(self, message: Message) -> None:
         array = self._parse_msg(message)

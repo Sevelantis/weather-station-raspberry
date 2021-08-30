@@ -1,2 +1,46 @@
-2021-08-30 19:38:47,382 - INFO --- Logger - Msg: Database sensors not exists. Creating db: sensors
-2021-08-30 19:38:47,404 - INFO --- Logger - Msg: Catcher was already connected to MQTT. RC = 0
+2021-08-31 00:19:03,102 - INFO --- Logger - Msg: Database sensors not exists. Creating db: sensors
+2021-08-31 00:19:03,116 - INFO --- Logger - Msg: Catcher was already connected to MQTT. RC = 0
+2021-08-31 00:19:04,581 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:04,587 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:04,598 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:04,610 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:05,590 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:05,592 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:05,610 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:05,628 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:07,853 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:07,861 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:07,874 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:07,892 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:09,121 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:09,125 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:09,135 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:09,149 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:10,128 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:10,129 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:10,147 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:10,164 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:11,389 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:11,393 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:11,401 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:11,411 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:12,395 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:12,400 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:12,409 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:12,422 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:13,660 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:13,664 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:13,673 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:13,686 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:14,668 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:14,675 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:14,687 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:14,705 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:15,936 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:15,941 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:15,948 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:15,959 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:16,943 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:16,946 - INFO --- Logger - Msg: SENT,Wrocław,/HYG,HYG,Wrocław,humidity,63
+2021-08-31 00:19:16,965 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,temperature,23
+2021-08-31 00:19:16,982 - INFO --- Logger - Msg: RECEIVED,Wrocław,/HYG,HYG,Wrocław,humidity,63
