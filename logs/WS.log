@@ -1,0 +1,2 @@
+2021-08-30 19:38:47,382 - INFO --- Logger - Msg: Database sensors not exists. Creating db: sensors
+2021-08-30 19:38:47,404 - INFO --- Logger - Msg: Catcher was already connected to MQTT. RC = 0

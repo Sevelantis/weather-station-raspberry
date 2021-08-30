@@ -1,19 +1,15 @@
 '''
 This module reads data from RPi sensors - real-time\
 '''
-import logging
-from sensors.hygrometer import *
-from sensors.thermometer import *
-from sensors.barometer import *
-from sensors.gas_sensor import *
-from mqtt.publisher import *
-from mqtt.catcher import *
-import random
-logging.basicConfig(level=logging.INFO, format='%(asctime)s:%(name)s:%(message)s ')
+from transmitter.publisher import Publisher
+from receiver.catcher import Catcher
+from transmitter.sensors.hygrometer import Hygrometer
+from transmitter.sensors.barometer import Barometer
+from observers.logger import Logger
 
 if __name__ == '__main__':
     publisher = Publisher()
-
+    logger = Logger()
     catcher = Catcher()
     catcher.start()
 
@@ -25,10 +21,14 @@ if __name__ == '__main__':
     #     time.sleep(0.5)
     #     publisher.publish('/home/pi/weather-station/data/test', random.randint(0,1000))
 
-    # sensors = [Hygrometer(publisher), Thermometer(publisher), Barometer(publisher), Gas_sensor(publisher)]
-    sensors = [Hygrometer(publisher)]
+    sensors = [Hygrometer()]
+
+    catcher.add_observer(logger)
+    publisher.add_observer(logger)
+
     # run devices threads
     for sensor in sensors:
+        sensor.add_observer(publisher)
         sensor.start()
     
     # join devices threads
@@ -36,4 +36,4 @@ if __name__ == '__main__':
         sensor.join()
 
     catcher.join()
-    logging.info('EXIT SUCCESS')
+    print('EXIT SUCCEESS')
