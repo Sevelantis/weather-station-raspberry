@@ -11,8 +11,7 @@ class Logger(Observer):
         pass
 
     def notify(self, msg) -> None:
-        '''TODO::'''
-        if type(msg) == Message:
+        if isinstance(msg, Message):
             logging.info(f'{msg.logging_stage},{msg.location},{msg.topic},{msg.sensor_id},{msg.location},{msg.type},{msg.value}')
-        elif type(msg) == str:
+        if isinstance(msg, str):
             logging.info(msg)

@@ -20,9 +20,9 @@ MQTT_PORT = 1883
 MQTT_CLIENT_ID = 'mqtt_to_influxdb_publisher'
 
 class Catcher(Thread, Observable):
-    def __init__(self):
-        super().__init__()
-        Observable.__init__(self)
+    def __init__(self, observers):
+        Thread.__init__(self)
+        Observable.__init__(self, observers)
         self.name = 'HYG'
         self.running = True
 
@@ -63,13 +63,14 @@ class Catcher(Thread, Observable):
         self.mqtt.loop_stop()
 
     def on_connect(self, client, userdata, flags, rc):
-        print(f'Connected with RC = {rc}')
+        self.notify_observers(f'Catcher: Connected with RC = {rc}')
+        
         if rc == 0:
             self.connected = True
             client.subscribe('/+')
-            logging.info(f'Catcher was already connected to MQTT. RC = {rc}')
+            self.notify_observers(f'Catcher: was already connected to MQTT. RC = {rc}')
         else:
-            logging.info(f'Catcher MQTT connection failed. RC = {rc}')
+            self.notify_observers(f'Catcher: MQTT connection failed. RC = {rc}')
 
     def _init_influxdb_agent(self):
         self.influxdb_agent = InfluxDBClient(INFLUXDB_ADDRESS, INFLUXDB_PORT, INFLUXDB_USER, INFLUXDB_PASSWORD, None)

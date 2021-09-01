@@ -8,9 +8,9 @@ from transmitter.sensors.barometer import Barometer
 from observers.logger import Logger
 
 if __name__ == '__main__':
-    publisher = Publisher()
     logger = Logger()
-    catcher = Catcher()
+    publisher = Publisher([logger])
+    catcher = Catcher([logger])
     catcher.start()
 
     # running = True

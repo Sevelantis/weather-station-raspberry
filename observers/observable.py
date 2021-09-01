@@ -9,8 +9,8 @@ class Observer:
         pass
 
 class Observable:
-    def __init__(self) -> None:
-        self.observers = []
+    def __init__(self, observers=[]) -> None:
+        self.observers = observers
 
     def add_observer(self, observer: Observer) -> None:
         if observer not in self.observers:
