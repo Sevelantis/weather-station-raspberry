@@ -17,7 +17,7 @@ INFLUXDB_DATABASE = 'sensors'
 
 MQTT_ADDRESS = 'localhost'
 MQTT_PORT = 1883
-MQTT_CLIENT_ID = 'mqtt_to_influxdb_publisher'
+MQTT_CLIENT_ID = 'WS_mqtt_over_containers-catcher'
 
 class Catcher(Thread, Observable):
     def __init__(self, observers):

@@ -23,4 +23,3 @@ class Sensor(Thread, Observable):
         if sensor_data:
             for type, value in sensor_data:
                 self.notify_observers(self.build_message(type=type, value=value, logging_stage=LoggingStage.COLLECTED.value))
-                self.notify_observers(f'{type} {value} {self.name}')

@@ -5,7 +5,7 @@ from DTO.message import Message, LoggingStage
 
 MQTT_ADDRESS = 'localhost'
 MQTT_PORT = 1883
-MQTT_CLIENT_ID = 'publish_sensor_data_to_broker'
+MQTT_CLIENT_ID = 'WS_mqtt_over_containers-publisher'
 
 class Publisher(Observable, Observer):
     def __init__(self, observers):

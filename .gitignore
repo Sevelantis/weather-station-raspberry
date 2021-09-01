@@ -2,3 +2,4 @@ __pycache__/
 log
 influxdb/data/
 grafana/data/
+logs/
