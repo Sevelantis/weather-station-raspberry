@@ -8,7 +8,7 @@ MQTT_PORT = 1883
 MQTT_CLIENT_ID = 'WS_mqtt_over_containers-publisher'
 
 class Publisher(Observable, Observer):
-    def __init__(self, observers):
+    def __init__(self, observers=None):
         Observable.__init__(self, observers)
         self.connected = False
         self._init_mqtt()
@@ -17,8 +17,6 @@ class Publisher(Observable, Observer):
         msg.logging_stage = LoggingStage.SENT.value
 
         self.mqtt.publish(msg.topic, msg.serialize())
-
-        self.notify_observers(msg)
 
     def on_publish(self, client, data, result):
         pass

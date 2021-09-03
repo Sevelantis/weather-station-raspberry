@@ -13,15 +13,7 @@ if __name__ == '__main__':
     catcher = Catcher([logger])
     catcher.start()
 
-    # running = True
-    # while running:
-    #     if handler.SIGINT:
-    #         running = False
-    #         break
-    #     time.sleep(0.5)
-    #     publisher.publish('/home/pi/weather-station/data/test', random.randint(0,1000))
-
-    sensors = [Hygrometer()]
+    sensors = [Hygrometer(), Barometer()]
 
     catcher.add_observer(logger)
     publisher.add_observer(logger)

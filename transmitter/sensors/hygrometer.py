@@ -29,7 +29,7 @@ class Hygrometer(Sensor):
 
     def get_sensor_data(self):
         try:
-            time.sleep(1)
+            time.sleep(1.0)
             temperature = self.dev.temperature
             humidity = self.dev.humidity
             if temperature is not None and humidity is not None:
