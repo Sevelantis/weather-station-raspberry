@@ -6,6 +6,7 @@ from receiver.catcher import Catcher
 from transmitter.sensors.hygrometer import Hygrometer
 from transmitter.sensors.barometer import Barometer
 from transmitter.sensors.ultrasonic import Ultrasonic
+from transmitter.sensors.thermometer import Thermometer
 from observers.logger import Logger
 
 if __name__ == '__main__':
@@ -14,7 +15,7 @@ if __name__ == '__main__':
     catcher = Catcher([logger])
     catcher.start()
 
-    sensors = [Hygrometer(), Barometer(), Ultrasonic()]
+    sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer()]
 
     catcher.add_observer(logger)
     publisher.add_observer(logger)

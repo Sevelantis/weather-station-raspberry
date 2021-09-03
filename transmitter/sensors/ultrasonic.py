@@ -4,13 +4,13 @@ Ultrasonic sensor HC-SR04
 PINOUT:
     HC  | RPI
 1   VCC | 2 (5.0V)
-2   TRIG| 16 (GPIO) (23 BCM)
-3   ECHO| 18 (GPIO) (24 BCM)
+2   ECHO| 18 (GPIO) (24 BCM)
+3   TRIG| 8 (GPIO) (14 BCM)
 4   GND | 14 (GND)
 
-Inserted two pull-up resistors 330 and 470ohm, binding together ECHO and GND
+Inserted two pull-up resistors 470ohm and 470ohm, binding together ECHO and GND
 This is because HR-SR04 works at 5V and GPIO pins works at max 3.3V
-ECHO->330->GPIO->470->GND
+ECHO->470->GPIO->470->GND
 '''
 import time
 import RPi.GPIO as GPIO
@@ -31,14 +31,14 @@ class Ultrasonic(Sensor):
 
         #set GPIO Pins
         self.GPIO_ECHO = 24
-        self.GPIO_TRIGGER = 23
+        self.GPIO_TRIGGER = 14
 
         #set GPIO direction (IN / OUT)
         GPIO.setup(self.GPIO_TRIGGER, GPIO.OUT)
         GPIO.setup(self.GPIO_ECHO, GPIO.IN)
 
     def get_sensor_data(self):
-        time.sleep(1.0)
+        time.sleep(2.0)
         try:
             distance = self.get_distance()
             if distance is not None:

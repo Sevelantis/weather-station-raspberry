@@ -4,7 +4,7 @@ DHT11 hygrometer & thermometer module.
 PINOUT:
     DHT | RPI
 1   VCC | 2 (5.0V)
-2   SIG | 7 (GPIO)
+2   SIG | 16 (GPIO) (BCM 23)
 3   -   | - 
 4   GND | 9 (GND)
 
@@ -25,7 +25,7 @@ class Hygrometer(Sensor):
         self.location = 'Wrocław'
 
         # Init Device
-        self.dev = adafruit_dht.DHT11(board.D4)
+        self.dev = adafruit_dht.DHT11(board.D23)
 
     def get_sensor_data(self):
         try:

@@ -27,7 +27,7 @@ class Barometer(Sensor):
         self.dev = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address = 0x76)
 
     def get_sensor_data(self):
-        time.sleep(1.0)
+        time.sleep(2.5)
         try:
             pressure = float(self.dev.pressure)
             temperature = float(self.dev.temperature)
