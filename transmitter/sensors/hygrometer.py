@@ -20,11 +20,11 @@ class Hygrometer(Sensor):
         Sensor.__init__(self)
         self.name = 'HYG'
         self.running = True
-        # Init Device
         self.topic = f'/{self.name}'
         self.sensor_id = self.name
         self.location = 'Wrocław'
 
+        # Init Device
         self.dev = adafruit_dht.DHT11(board.D4)
 
     def get_sensor_data(self):

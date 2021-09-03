@@ -18,19 +18,19 @@ class Barometer(Sensor):
         Sensor.__init__(self)
         self.name = 'BAR'
         self.running = True
-        # Init Device
         self.topic = f'/{self.name}'
         self.sensor_id = self.name
         self.location = 'Wrocław'
 
+        # Init Device
         i2c = board.I2C()       
         self.dev = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address = 0x76)
 
     def get_sensor_data(self):
         time.sleep(1.0)
         try:
-            pressure = self.dev.pressure
-            temperature = self.dev.temperature
+            pressure = float(self.dev.pressure)
+            temperature = float(self.dev.temperature)
             if pressure is not None:
                 return [
                         ('temperature', temperature),
