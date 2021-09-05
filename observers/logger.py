@@ -3,7 +3,7 @@ import sys
 from observers.observable import Observer
 from DTO.message import Message
 
-logging.basicConfig(level=logging.INFO, filename='./logs/WS.log', filemode='w', format='%(asctime)s - %(levelname)s --- Logger - Msg: %(message)s')
+logging.basicConfig(level=logging.INFO, filename='/home/pi/weather-station/logs/WS.log', filemode='w', format='%(asctime)s - %(levelname)s --- Logger - Msg: %(message)s')
 logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
 class Logger(Observer):
