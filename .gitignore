@@ -3,3 +3,4 @@ log
 influxdb/data/
 grafana/data/
 logs/
+prometheus/prometheus_data/
