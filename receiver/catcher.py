@@ -75,12 +75,15 @@ class Catcher(Thread, Observable):
     def _init_influxdb_agent(self):
         self.influxdb_agent = InfluxDBClient(INFLUXDB_ADDRESS, INFLUXDB_PORT, INFLUXDB_USER, INFLUXDB_PASSWORD, None)
         
-        sensors_database = [db for db in self.influxdb_agent.get_list_database() if db['name'] == INFLUXDB_DATABASE]
-        if INFLUXDB_DATABASE not in sensors_database:
-            logging.info(f'Database {INFLUXDB_DATABASE} not exists. Creating db: {INFLUXDB_DATABASE}' )
-            self.influxdb_agent.create_database(INFLUXDB_DATABASE)
-        else: 
-            logging.info(f'Database {INFLUXDB_DATABASE} has already been created.')
+        # sensors_database = [db for db in self.influxdb_agent.get_list_database() if db['name'] == INFLUXDB_DATABASE]
+        # if INFLUXDB_DATABASE not in sensors_database:
+        #     logging.info(f'Database {INFLUXDB_DATABASE} not exists. Creating db: {INFLUXDB_DATABASE}' )
+        #     self.influxdb_agent.create_database(INFLUXDB_DATABASE)
+        # else: 
+        #     logging.info(f'Database {INFLUXDB_DATABASE} has already been created.')
+
+        self.influxdb_agent.create_database(INFLUXDB_DATABASE)
+
         
         self.influxdb_agent.switch_database(INFLUXDB_DATABASE)
     
