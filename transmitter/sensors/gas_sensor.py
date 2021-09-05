@@ -1,25 +1,40 @@
 '''
-NAME gas_sensor module.
-'''
-from threading import *
-from signal_handler import handler
-import time
+MQ-2 gas sensor module. LPG, smoke
 
-class Gas_sensor(Thread):
-    def __init__(self):
-        super().__init__()
-        self.name = 'GAS'
-        self.running = True
-
-    def run(self):
-        while self.running:
-            # print(super().name)
-
-            self.read_data()
-
-            if handler.SIGINT:
-                self.running = False
-                break
+PINOUT:
+    DHT | RPI
     
-    def read_data(self):
-        time.sleep(5.0)
+Inserted 10K Ohm pull-up resistor binding together VCC and SIG.
+'''
+import time
+import board
+import adafruit_dht
+from transmitter.sensors.sensor import Sensor
+
+class Hygrometer(Sensor):
+    def __init__(self):
+        Sensor.__init__(self)
+        self.name = 'HYG'
+        self.running = True
+        self.topic = f'/{self.name}'
+        self.sensor_id = self.name
+        self.location = 'Wrocław'
+
+        # Init Device
+        self.dev = adafruit_dht.DHT11(board.D23)
+
+    def get_sensor_data(self):
+        try:
+            time.sleep(1.0)
+            temperature = self.dev.temperature
+            humidity = self.dev.humidity
+            if temperature is not None and humidity is not None:
+                return [
+                    ('temperature', temperature),
+                    ('humidity', humidity)
+                ]
+        except RuntimeError as error:
+            print(error.args[0])
+        except Exception as error:
+            self.dev.exit()
+            raise error
