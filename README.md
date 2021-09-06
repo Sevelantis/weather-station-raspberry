@@ -18,7 +18,7 @@
   - Grafana has two data sources added:
     - Influxdb - sensors data
     - Prometheus - host metrics
-  - Grafana is the endpoint of the stack and has some dashboard created in order to visualise the data
+  - Grafana is the endpoint of the stack and has some dashboards created in order to visualise received data:
 
 ## Sensors Dashboard:
 ![Alt text](/readme-files/diagnostics-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - sensors.")
