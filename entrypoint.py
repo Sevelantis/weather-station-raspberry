@@ -17,9 +17,6 @@ if __name__ == '__main__':
 
     sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer()]
 
-    catcher.add_observer(logger)
-    publisher.add_observer(logger)
-
     # run devices threads
     for sensor in sensors:
         sensor.add_observer(publisher)
