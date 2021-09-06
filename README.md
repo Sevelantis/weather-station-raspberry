@@ -1,11 +1,11 @@
 # weather-station
 
-Project explanation:
+### Project explanation:
   - Raspberry Pi 4, 2GB RAM, OS: Linux Raspbian OS Lite
   - Some external sensors (DHT11, BMP280, DS18B20, HC-SR04, MQ-2)
   - Docker containers
  
-Stack:
+### Stack:
   - Docker creates containers:
     - MQTT
     - InfluxDB
