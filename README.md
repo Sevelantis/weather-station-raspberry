@@ -21,6 +21,6 @@ Stack:
   - Grafana is the endpoint of the stack and has some dashboard created in order to visualise the data
 
 ## Sensors Dashboard:
-![Alt text](/readme-files/sensors-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - sensors.")
+![Alt text](/readme-files/diagnostics-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - sensors.")
 ## Host Metrics Dashboard:
-![Alt text](/readme-files/diagnostics-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - Raspberry Pi Diagnostic info")
+![Alt text](/readme-files/sensors-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - Raspberry Pi Diagnostic info")
