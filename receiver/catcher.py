@@ -1,3 +1,4 @@
+import influxdb
 import paho.mqtt.client as mqtt
 from threading import *
 from sig.signal_handler import handler
@@ -81,10 +82,8 @@ class Catcher(Thread, Observable):
         #     self.influxdb_agent.create_database(INFLUXDB_DATABASE)
         # else: 
         #     logging.info(f'Database {INFLUXDB_DATABASE} has already been created.')
-
-        self.influxdb_agent.create_database(INFLUXDB_DATABASE)
-
-        
+        # self.influxdb_agent.create_database(INFLUXDB_DATABASE)
+   
         self.influxdb_agent.switch_database(INFLUXDB_DATABASE)
     
     def _init_mqtt(self):
