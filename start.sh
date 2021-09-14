@@ -19,7 +19,7 @@ while -z "${host}"; do
     sleep 2
 done
 
-# wait  for influxdb until it opens a port
+# wait  for influxdb until it opens a port 
 port="8086"
 while ! nc -z "${host}" "${port}"; do   
     echo 'waiting for influxdb..'
@@ -27,7 +27,7 @@ while ! nc -z "${host}" "${port}"; do
 done
 echo 'INFLUXDB READY'
 
-# process pulsein is not letting PIN23 to free
+# process pulsein is not letting PIN23 to free, kill it
 PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep 23 | awk '{print$2}')
 [ ! -z $PID ] && kill $PID
 
