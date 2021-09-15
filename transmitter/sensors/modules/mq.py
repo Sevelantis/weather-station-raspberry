@@ -54,7 +54,6 @@ class MQ():
     def MQPercentage(self):
         val = {}
         read = self.MQRead(self.MQ_PIN)
-        print(f'_read_ -> {read}')
         val["GAS_LPG"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_LPG)
         val["CO"]       = self.MQGetGasPercentage(read/self.Ro, self.GAS_CO)
         val["SMOKE"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_SMOKE)
@@ -85,7 +84,6 @@ class MQ():
             raw_adc = self.adc.read(mq_pin)
             val += self.MQResistanceCalculation(raw_adc)
             time.sleep(self.CALIBRATION_SAMPLE_INTERVAL/1000.0)
-            print(f"{i}/{self.CALIBARAION_SAMPLE_TIMES}, val={str(float(raw_adc))}, total={val}")
 
         val = val/self.CALIBARAION_SAMPLE_TIMES                 # calculate the average value
 
@@ -144,5 +142,4 @@ class MQ():
             rs_ro_ratio = 0
         power = ((math.log(rs_ro_ratio) - pcurve[1]) / pcurve[2]) + pcurve[0]
         ans = (math.pow(10, power))
-        print(f'10^{power}={ans}')
         return ans
