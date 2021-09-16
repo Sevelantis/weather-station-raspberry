@@ -4,7 +4,7 @@ from DTO.dto import DTO
 class LoggingStage(Enum):
     COLLECTED = 'COLLECTED'
     SENT = 'SENT'
-    RECEIVED = 'RECEIVED'
+    RECEIVED = 'Received'
 
 class Message(DTO):
     def __init__(self, topic=None, sensor_id=None, location=None, type=None, value=None, logging_stage=None) -> None:
