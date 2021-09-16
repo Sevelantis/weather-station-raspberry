@@ -17,7 +17,6 @@ if __name__ == '__main__':
     catcher.start()
 
     sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer(), Gas_sensor([logger])]
-    # sensors = [Hygrometer()]
 
     # run devices threads
     for sensor in sensors:
