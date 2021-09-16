@@ -15,7 +15,6 @@ class Publisher(Observable, Observer):
 
     def notify(self, msg: Message) -> None:
         msg.logging_stage = LoggingStage.SENT.value
-
         self.mqtt.publish(msg.topic, msg.serialize())
 
     def on_publish(self, client, data, result):
