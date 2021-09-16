@@ -1,13 +1,15 @@
 '''
-This module reads data from RPi sensors - real-time\
+This module reads data from RPi sensors - real-time
 '''
+from signals.signal_handler import signal_handler
 from transmitter.publisher import Publisher
-from receiver.catcher import Catcher
 from transmitter.sensors.hygrometer import Hygrometer
 from transmitter.sensors.barometer import Barometer
 from transmitter.sensors.ultrasonic import Ultrasonic
 from transmitter.sensors.thermometer import Thermometer
+from transmitter.sensors.gas_sensor import Gas_sensor
 from observers.logger import Logger
+from receiver.catcher import Catcher
 
 if __name__ == '__main__':
     logger = Logger()
@@ -15,7 +17,8 @@ if __name__ == '__main__':
     catcher = Catcher([logger])
     catcher.start()
 
-    sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer()]
+    # sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer(), Gas_sensor()]
+    sensors = [Gas_sensor([logger])]
 
     # run devices threads
     for sensor in sensors:
@@ -27,4 +30,4 @@ if __name__ == '__main__':
         sensor.join()
 
     catcher.join()
-    print('EXIT SUCCEESS')
+    logger.notify("Logger: Ended session. Goobye!!")
