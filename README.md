@@ -21,7 +21,9 @@
     - Prometheus - host metrics
   - Grafana is the endpoint of the stack and has some dashboards created in order to visualise received data:
 
-## Sensors Dashboard:
+## Gas sensor Dashboard
+![Alt text](/readme-files/gas-sensor-grafana-timelapse.gif?raw=true "CH4 / CO / CO2")
+## Other sensors Dashboard:
 ![Alt text](/readme-files/diagnostics-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - sensors.")
 ## Host Metrics Dashboard:
 ![Alt text](/readme-files/sensors-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - Raspberry Pi Diagnostic info")
