@@ -1,4 +1,5 @@
 __pycache__/
+kill_entrypoint.sh
 log
 influxdb/data/
 grafana/data/

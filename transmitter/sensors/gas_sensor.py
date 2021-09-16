@@ -46,20 +46,17 @@ from transmitter.sensors.sensor import Sensor
 from observers.observable import Observable, Observer
 
 class Gas_sensor(Sensor):
-    def __init__(self, observers: Observable=None):
+    def __init__(self, MQ_observers: Observable=None):
         Sensor.__init__(self)
         self.name = 'GAS'
         self.running = True
         self.topic = f'/{self.name}'
         self.sensor_id = self.name
         self.location = 'Wrocław'
-
-        # Init Device
-        self.dev = MQ(analogPin=0, observers=observers)
+        self.MQ_observers = MQ_observers
 
     def get_sensor_data(self):
         try:
-            time.sleep(1.0)
             perc = self.dev.MQPercentage()
             if perc['CO'] and perc['CO2'] and perc['LPG']:
                 return [
@@ -72,3 +69,8 @@ class Gas_sensor(Sensor):
         except Exception as error:
             self.dev.exit()
             raise error
+
+    def run(self):
+        # Init Device
+        self.dev = MQ(analogPin=0, observers=self.MQ_observers)
+        super().run()

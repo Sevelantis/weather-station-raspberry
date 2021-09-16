@@ -13,6 +13,7 @@ Inserted 10K Ohm pull-up resistor binding together VCC and SIG.
 import time
 import board
 import adafruit_dht
+import RPi.GPIO as GPIO
 from transmitter.sensors.sensor import Sensor
 
 class Hygrometer(Sensor):
@@ -29,10 +30,9 @@ class Hygrometer(Sensor):
 
     def get_sensor_data(self):
         try:
-            time.sleep(1.0)
             temperature = self.dev.temperature
             humidity = self.dev.humidity
-            if temperature is not None and humidity is not None:
+            if temperature and humidity:
                 return [
                     ('temperature', temperature),
                     ('humidity', humidity)
@@ -41,4 +41,10 @@ class Hygrometer(Sensor):
             print(error.args[0])
         except Exception as error:
             self.dev.exit()
+            print(error)
             raise error
+
+    def run(self) -> None:
+        super().run()
+        self.dev.exit()
+        print('_________________________________________________________________')

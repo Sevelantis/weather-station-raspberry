@@ -38,10 +38,9 @@ class Ultrasonic(Sensor):
         GPIO.setup(self.GPIO_ECHO, GPIO.IN)
 
     def get_sensor_data(self):
-        time.sleep(2.0)
         try:
             distance = self.get_distance()
-            if distance is not None:
+            if distance:
                 return [
                     ('distance', distance)
                 ]

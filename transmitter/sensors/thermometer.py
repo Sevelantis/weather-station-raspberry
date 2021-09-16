@@ -35,9 +35,8 @@ class Thermometer(Sensor):
 
     def get_sensor_data(self):
         try:
-            time.sleep(1.0)
             temperature = self.dev.get_temperature()
-            if temperature is not None:
+            if temperature:
                 return [
                     ('temperature', temperature)
                 ]

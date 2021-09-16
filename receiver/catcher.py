@@ -46,8 +46,7 @@ class Catcher(Thread, Observable):
         while self.running:
             if signal_handler.SIGINT:
                 self.running = False
-                self.notify_observers("Catcher: received SIGINT, exiting catcher's thread.")
-                break
+                self.notify_observers("Catcher: SIGINT detected. Exiting catcher's thread.")
             time.sleep(0.5)
         # on quit
         self.mqtt.loop_stop()

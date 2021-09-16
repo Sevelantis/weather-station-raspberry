@@ -1,5 +1,5 @@
 import signal
-from observers.observable import Observable
+import logging
 
 class SIGINT_handler():
     def __init__(self):
@@ -7,6 +7,7 @@ class SIGINT_handler():
         signal.signal(signal.SIGINT, self.signal_handler)
 
     def signal_handler(self, signal, frame):
+        logging.info('SIGNAL_HANDLER: SIGINT catched. You pressed CONTROL + C !')
         self.SIGINT = True
 
 signal_handler = SIGINT_handler()

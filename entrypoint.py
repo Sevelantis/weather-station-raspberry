@@ -17,15 +17,17 @@ if __name__ == '__main__':
     catcher.start()
 
     sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer(), Gas_sensor([logger])]
+    # sensors = [Hygrometer()]
 
     # run devices threads
     for sensor in sensors:
         sensor.add_observer(publisher)
         sensor.start()
     
+    catcher.join()
+    
     # join devices threads
     for sensor in sensors:
         sensor.join()
 
-    catcher.join()
     logger.notify("Logger: Ended session. Goobye!!")
