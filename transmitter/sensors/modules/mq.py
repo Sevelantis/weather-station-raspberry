@@ -3,9 +3,12 @@
 
 import time
 import math
-from transmitter.sensors.modules.MCP3008 import MCP3008
 
-class MQ():
+from requests import check_compatibility
+from transmitter.sensors.modules.MCP3008 import MCP3008
+from observers.observable import Observable, Observer
+
+class MQ(Observable):
 
     MQ_PIN                       = 0        # define which analog input channel you are going to use (MCP3008)
     ######################### Hardware Related Macros #########################
@@ -27,11 +30,13 @@ class MQ():
     GAS_CO                       = 1
     GAS_SMOKE                    = 2
 
-    def __init__(self, Ro=10, analogPin=0):
+    def __init__(self, Ro=10, analogPin=0, observers: Observable=None):
+        Observable.__init__(self, observers)
         self.Ro = Ro
         self.MQ_PIN = analogPin
         self.adc = MCP3008(bus=0, device=0)
         
+        # CALIBRATE 3RD PARAMETER
         self.LPGCurve = [2.3+3.0,0.21,-0.41]    # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent"
                                             # to the original curve. 
@@ -45,18 +50,17 @@ class MQ():
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
                 
-        print("Calibrating...")
+        self.notify_observers("MQ: Calibrating MQ-2 sensor...")
         self.Ro = self.MQCalibration(self.MQ_PIN)
-        print("Calibration is done...\n")
-        print("Ro=%f kohm" % self.Ro)
-    
+        self.notify_observers("MQ: Calibration is done...")
+        self.notify_observers("MQ: Ro=%f kohm" % self.Ro)
     
     def MQPercentage(self):
         val = {}
         read = self.MQRead(self.MQ_PIN)
-        val["GAS_LPG"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_LPG)
-        val["CO"]       = self.MQGetGasPercentage(read/self.Ro, self.GAS_CO)
-        val["SMOKE"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_SMOKE)
+        val["LPG"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_LPG)
+        val["CO"]   = self.MQGetGasPercentage(read/self.Ro, self.GAS_CO)
+        val["CO2"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_SMOKE)
         return val
         
     ######################### MQResistanceCalculation #########################
@@ -84,6 +88,7 @@ class MQ():
             raw_adc = self.adc.read(mq_pin)
             val += self.MQResistanceCalculation(raw_adc)
             time.sleep(self.CALIBRATION_SAMPLE_INTERVAL/1000.0)
+            self.MQPrintCalibrationPercentage(i)
 
         val = val/self.CALIBARAION_SAMPLE_TIMES                 # calculate the average value
 
@@ -91,7 +96,10 @@ class MQ():
                                                                 # according to the chart in the datasheet 
         return val
       
-      
+    def MQPrintCalibrationPercentage(self, progress):
+        if progress % (self.CALIBARAION_SAMPLE_TIMES / 5) == 0:
+            self.notify_observers(f"MQ: Calibrating: {str((progress+1)/self.CALIBARAION_SAMPLE_TIMES*100.0)}% done.")
+
     #########################  MQRead ##########################################
     # Input:   mq_pin - analog channel
     # Output:  Rs of the sensor

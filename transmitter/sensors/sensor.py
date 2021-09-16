@@ -1,5 +1,5 @@
+from signals.signal_handler import signal_handler
 from DTO.message import Message, LoggingStage
-from sig.signal_handler import handler
 from observers.observable import Observable
 from threading import *
 
@@ -11,7 +11,7 @@ class Sensor(Thread, Observable):
     def run(self) -> None:
         while self.running:
             self.read_data()
-            if handler.SIGINT:
+            if signal_handler.SIGINT:
                 self.running = False
                 break
 

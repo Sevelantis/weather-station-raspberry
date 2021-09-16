@@ -41,12 +41,12 @@ MCP3008 - AC/DC converter
 in "mq" module the 'curve' value has been calibrated properly to my current city (Wrocław) average indoor air pollution (Methane ~1.7ppm, CO ~3ppm, CO2 ~400ppm)
 '''
 import time
-from transmitter.sensors.modules.MCP3008 import MCP3008
 from transmitter.sensors.modules.mq import MQ
 from transmitter.sensors.sensor import Sensor
+from observers.observable import Observable, Observer
 
-class Hygrometer(Sensor):
-    def __init__(self):
+class Gas_sensor(Sensor):
+    def __init__(self, observers: Observable=None):
         Sensor.__init__(self)
         self.name = 'GAS'
         self.running = True
@@ -55,16 +55,17 @@ class Hygrometer(Sensor):
         self.location = 'Wrocław'
 
         # Init Device
+        self.dev = MQ(analogPin=0, observers=observers)
 
     def get_sensor_data(self):
         try:
             time.sleep(1.0)
-            temperature = self.dev.temperature
-            humidity = self.dev.humidity
-            if temperature is not None and humidity is not None:
+            perc = self.dev.MQPercentage()
+            if perc['CO'] and perc['CO2'] and perc['LPG']:
                 return [
-                    ('temperature', temperature),
-                    ('humidity', humidity)
+                    ('LPG', float(perc['LPG'])),
+                    ('CO',  float(perc['CO'])),
+                    ('CO2', float(perc['CO2']))
                 ]
         except RuntimeError as error:
             print(error.args[0])
