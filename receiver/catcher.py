@@ -1,11 +1,7 @@
-import influxdb
+from signals.signal_handler import signal_handler
 import paho.mqtt.client as mqtt
 from threading import *
-from sig.signal_handler import handler
 import time
-import random
-import string
-import logging
 from influxdb import InfluxDBClient
 from DTO.message import Message, LoggingStage
 from observers.observable import Observable
@@ -40,26 +36,19 @@ class Catcher(Thread, Observable):
         self.notify_observers(msg)
 
     def _send_data_to_influxdb(self, message: Message) -> None:
-        array = self._parse_msg(message)
-        self.influxdb_agent.write_points(array, database=INFLUXDB_DATABASE, time_precision='ms', batch_size=10000, protocol='line')
+        points = self._parse_msg(message)
+        self.influxdb_agent.write_points(points, database=INFLUXDB_DATABASE, protocol='line',time_precision='ms', batch_size=10000)
 
     def _parse_msg(self, msg: Message):
-        return [
-            "{measurement},location={location},sensor_id={sensor_id},type={type} value={value}i {timestamp}"
-            .format(measurement=msg.topic,
-                    location=msg.location,
-                    sensor_id=msg.sensor_id,
-                    type=msg.type,
-                    value=int(msg.value),
-                    timestamp=int(time.time_ns()/1000000))]
+        return [f"{msg.topic},location={msg.location},sensor_id={msg.sensor_id},type={msg.type} value={msg.value} {int(time.time() * 1000)}"]
 
     def run(self):
         while self.running:
-            if handler.SIGINT:
+            if signal_handler.SIGINT:
                 self.running = False
+                self.notify_observers("Catcher: received SIGINT, exiting catcher's thread.")
                 break
             time.sleep(0.5)
-
         # on quit
         self.mqtt.loop_stop()
 
@@ -74,17 +63,23 @@ class Catcher(Thread, Observable):
             self.notify_observers(f'Catcher: MQTT connection failed. RC = {rc}')
 
     def _init_influxdb_agent(self):
-        self.influxdb_agent = InfluxDBClient(INFLUXDB_ADDRESS, INFLUXDB_PORT, INFLUXDB_USER, INFLUXDB_PASSWORD, None)
+        self.influxdb_agent = InfluxDBClient(host=INFLUXDB_ADDRESS, port=INFLUXDB_PORT, username=INFLUXDB_USER, password=INFLUXDB_PASSWORD)
         
-        # sensors_database = [db for db in self.influxdb_agent.get_list_database() if db['name'] == INFLUXDB_DATABASE]
-        # if INFLUXDB_DATABASE not in sensors_database:
-        #     logging.info(f'Database {INFLUXDB_DATABASE} not exists. Creating db: {INFLUXDB_DATABASE}' )
-        #     self.influxdb_agent.create_database(INFLUXDB_DATABASE)
-        # else: 
-        #     logging.info(f'Database {INFLUXDB_DATABASE} has already been created.')
-        # self.influxdb_agent.create_database(INFLUXDB_DATABASE)
-   
+        # check if sensors db exists
+        dbs = self.influxdb_agent.get_list_database()
+        sensors_db_exists = False
+        for db in dbs:
+            if db['name'] == INFLUXDB_DATABASE:
+                sensors_db_exists = True
+                break
+        if not sensors_db_exists:
+            self.notify_observers(f'Catcher: Creating database {INFLUXDB_DATABASE}. It didn\'t exist.')
+            self.influxdb_agent.create_database(INFLUXDB_DATABASE)
+        else:
+            self.notify_observers(f'Catcher: Database {INFLUXDB_DATABASE} already exists.')
+        # switch db
         self.influxdb_agent.switch_database(INFLUXDB_DATABASE)
+        self.notify_observers(f'Catcher: Switching to DB {INFLUXDB_DATABASE}')
     
     def _init_mqtt(self):
         self.mqtt = mqtt.Client(MQTT_CLIENT_ID)
