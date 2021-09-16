@@ -1,7 +1,6 @@
 '''
 This module reads data from RPi sensors - real-time
 '''
-from signals.signal_handler import signal_handler
 from transmitter.publisher import Publisher
 from transmitter.sensors.hygrometer import Hygrometer
 from transmitter.sensors.barometer import Barometer
@@ -17,8 +16,7 @@ if __name__ == '__main__':
     catcher = Catcher([logger])
     catcher.start()
 
-    # sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer(), Gas_sensor()]
-    sensors = [Gas_sensor([logger])]
+    sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer(), Gas_sensor([logger])]
 
     # run devices threads
     for sensor in sensors:
