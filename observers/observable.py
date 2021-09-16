@@ -1,5 +1,3 @@
-from enum import Enum
-
 class Observer:
     def __init__(self, name) -> None:
         self.name = name
@@ -20,3 +18,5 @@ class Observable:
         for observer in self.observers:
             observer.notify(data)
 
+    def get_observers(self) -> list:
+        return self.observers
