@@ -36,6 +36,7 @@ services:
         ports:
             - '3000:3000'
         user: root
+        restart: always
 
     node-exporter:
         container_name: node-exporter

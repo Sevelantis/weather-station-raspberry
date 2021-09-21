@@ -7,6 +7,7 @@ from transmitter.sensors.barometer import Barometer
 from transmitter.sensors.ultrasonic import Ultrasonic
 from transmitter.sensors.thermometer import Thermometer
 from transmitter.sensors.gas_sensor import Gas_sensor
+from transmitter.sensors.magnetometer import Magnetometer
 from observers.logger import Logger
 from receiver.catcher import Catcher
 
@@ -16,7 +17,7 @@ if __name__ == '__main__':
     catcher = Catcher([logger])
     catcher.start()
 
-    sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer(), Gas_sensor([logger])]
+    sensors = [Hygrometer(), Barometer(), Ultrasonic(), Thermometer(), Gas_sensor(MQ_observers=[logger]), Magnetometer(HMC_observers=[logger])]
 
     # run devices threads
     for sensor in sensors:
