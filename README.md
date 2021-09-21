@@ -1,8 +1,8 @@
 # weather-station
 
-### Project explanation:
+### Project brief:
   - Raspberry Pi 4, 2GB RAM, OS: Linux Raspbian OS Lite
-  - Some external sensors (DHT11, BMP280, DS18B20, HC-SR04, MQ-2)
+  - Some external sensors (DHT11, BMP280, DS18B20, HC-SR04, MQ-2, HMC5883L)
   - Docker
   - Python
  
