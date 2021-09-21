@@ -1,8 +1,8 @@
 # weather-station
 
-### Project explanation:
+### Project brief:
   - Raspberry Pi 4, 2GB RAM, OS: Linux Raspbian OS Lite
-  - Some external sensors (DHT11, BMP280, DS18B20, HC-SR04, MQ-2)
+  - Some external sensors (DHT11, BMP280, DS18B20, HC-SR04, MQ-2, HMC5883L)
   - Docker
   - Python
  
@@ -21,7 +21,9 @@
     - Prometheus - host metrics
   - Grafana is the endpoint of the stack and has some dashboards created in order to visualise received data:
 
-## Sensors Dashboard:
+## Gas sensor Dashboard
+![Alt text](/readme-files/gas-sensor-grafana-timelapse.gif?raw=true "CH4 / CO / CO2")
+## Other sensors Dashboard:
 ![Alt text](/readme-files/diagnostics-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - sensors.")
 ## Host Metrics Dashboard:
 ![Alt text](/readme-files/sensors-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - Raspberry Pi Diagnostic info")
