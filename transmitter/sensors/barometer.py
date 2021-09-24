@@ -8,7 +8,7 @@ PINOUT:
 3   SCL | 5 (SCL)
 4   SCK | 3 (SDA)
 '''
-import time
+import logging
 import board
 import adafruit_bmp280
 from transmitter.sensors.sensor import Sensor
@@ -36,7 +36,8 @@ class Barometer(Sensor):
                         ('pressure', pressure)
                     ]
         except RuntimeError as error:
-            print(error.args[0])
+            logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
+            logging.info(f"{self.name}: {error}")
             self.dev.exit()
             raise error

@@ -44,6 +44,7 @@ import time
 from transmitter.sensors.modules.mq import MQ
 from transmitter.sensors.sensor import Sensor
 from observers.observable import Observable, Observer
+import logging
 
 class Gas_sensor(Sensor):
     def __init__(self, MQ_observers: Observable=None):
@@ -65,8 +66,9 @@ class Gas_sensor(Sensor):
                     ('CO2', float(perc['CO2']))
                 ]
         except RuntimeError as error:
-            print(error.args[0])
+            logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
+            logging.info(f"{self.name}: {error}")
             self.dev.exit()
             raise error
 

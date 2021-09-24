@@ -15,6 +15,7 @@ ECHO->470->GPIO->470->GND
 import time
 import RPi.GPIO as GPIO
 from transmitter.sensors.sensor import Sensor
+import logging
 
 class Ultrasonic(Sensor):
     def __init__(self):
@@ -45,8 +46,9 @@ class Ultrasonic(Sensor):
                     ('distance', distance)
                 ]
         except RuntimeError as error:
-            print(error.args[0])
+            logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
+            logging.info(f"{self.name}: {error}")
             self.dev.exit()
             raise error
 

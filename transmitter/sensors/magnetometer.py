@@ -12,7 +12,7 @@ PINOUT:
 '''
 from transmitter.sensors.modules.HMC5883L import HMC5883L
 from transmitter.sensors.sensor import Sensor
-
+import logging
 
 class Magnetometer(Sensor):
     def __init__(self, HMC_observers):
@@ -42,7 +42,7 @@ class Magnetometer(Sensor):
                         ('z', z)
                     ]
         except RuntimeError as error:
-            print(error.args[0])
+            logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
-            print(f"Exception: {error}")
+            logging.info(f"{self.name}: {error}")
             raise error
