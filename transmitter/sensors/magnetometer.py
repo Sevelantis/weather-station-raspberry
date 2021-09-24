@@ -28,10 +28,12 @@ class Magnetometer(Sensor):
         # Init Device
         self.dev = HMC5883L(port=0, observers=self.HMC_observers)
         super().run()
+        # close i2c
+        self.dev.close()
 
     def get_sensor_data(self):
         try:
-            (x, y, z) = self.dev.getAxes()
+            (x, y, z) = self.dev.get_axes()
             # heading = self.dev.getHeading()
             if x and y and z:
                 return [
