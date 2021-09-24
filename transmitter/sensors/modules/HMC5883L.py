@@ -1,5 +1,5 @@
 import math
-from . import i2c
+from .lib import i2c
 import RPi.GPIO as GPIO
 import smbus2
 from time import *

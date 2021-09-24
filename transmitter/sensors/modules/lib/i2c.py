@@ -1,4 +1,4 @@
-from quick2wire.i2c import I2CMaster, writing_bytes, reading
+from .quick2wire.i2c import I2CMaster, writing_bytes, reading
 
 class i2c:
 	
