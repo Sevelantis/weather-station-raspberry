@@ -1,14 +1,15 @@
 from quick2wire.i2c import I2CMaster, writing_bytes, reading
-import time
 
 class i2c:
 	
 	def __init__(self, port, addr, debug = False):
 		self.i2c_device = I2CMaster(port)
 		self.addr = addr
-		
 		self.debug = debug
-		
+	
+	def close(self) -> None:
+		self.i2c_device.close()
+
 	def write_byte(self, *bytes):
 		self.i2c_device.transaction(
 			writing_bytes(self.addr, *bytes))
@@ -28,9 +29,9 @@ class i2c:
 			bit16 = (data[1] << 8) | data[0]
 		else:
 			bit16 = (data[0] << 8) | data[1]
-		
+
 		if self.debug:
-			print(hex(register)+": "+hex(bit16));
+			print(hex(register)+": "+hex(bit16))
 			
 		return bit16
 	
@@ -41,26 +42,32 @@ class i2c:
 	def read_3s16int(self, register, flip = False):
 		data = self.i2c_device.transaction(
 			writing_bytes(self.addr, register),
-			reading(self.addr, 6))[0]
-			
-		if self.debug:
-			print("3 signed 16: %s " % ', '.join(map(hex, data)))
-			
-		if flip:
-			s_int1 = (data[1] << 8) | data[0]
+			reading(self.addr, 6))
+		
+		if data:
+			data = data[0]
+
+			if self.debug:
+				print("3 signed 16: %s " % ', '.join(map(hex, data)))
+				
+			if flip:
+				s_int1 = (data[1] << 8) | data[0]
+			else:
+				s_int1 = (data[0] << 8) | data[1]
+				
+			if flip:
+				s_int2 = (data[3] << 8) | data[2]
+			else:
+				s_int2 = (data[2] << 8) | data[3]
+				
+			if flip:
+				s_int3 = (data[5] << 8) | data[4]
+			else:
+				s_int3 = (data[4] << 8) | data[5]
 		else:
-			s_int1 = (data[0] << 8) | data[1]
-			
-		if flip:
-			s_int2 = (data[3] << 8) | data[2]
-		else:
-			s_int2 = (data[2] << 8) | data[3]
-			
-		if flip:
-			s_int3 = (data[5] << 8) | data[4]
-		else:
-			s_int3 = (data[4] << 8) | data[5]
-			
+			print('HMC5883L_i2c: None data transaction.')
+			return
+
 		return (self.twosToInt(s_int1, 16), self.twosToInt(s_int2, 16), self.twosToInt(s_int3, 16) )
 													
 	def twosToInt(self, val, len):
