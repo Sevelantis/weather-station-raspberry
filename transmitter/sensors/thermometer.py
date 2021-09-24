@@ -9,8 +9,7 @@ PINOUT: (FLAT SIDE IS FRONT, COUNT FROM LEFT)
 
 Inserted 10K Ohm pull-up resistor binding together VCC and SIG.
 '''
-import time
-import RPi.GPIO as GPIO
+import logging
 from w1thermsensor import W1ThermSensor
 from transmitter.sensors.sensor import Sensor
 
@@ -22,16 +21,13 @@ class Thermometer(Sensor):
         self.topic = f'/{self.name}'
         self.sensor_id = self.name
         self.location = 'Wrocław'
-
-        # Init Device
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        
-        self.SIG_PIN = 1
-        GPIO.setup(self.SIG_PIN, GPIO.OUT)
-        GPIO.output(self.SIG_PIN, GPIO.HIGH)
-        
-        self.dev = W1ThermSensor()
+            
+    def run(self) -> None:
+        try:
+            self.dev = W1ThermSensor()
+        except Exception as e:
+            logging.info(f'{self.name}: Thermometer init failed.')
+        super().run()
 
     def get_sensor_data(self):
         try:
@@ -41,7 +37,8 @@ class Thermometer(Sensor):
                     ('temperature', temperature)
                 ]
         except RuntimeError as error:
-            print(error.args[0])
+            logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
+            logging.info(f"{self.name}: {error}")
             self.dev.exit()
             raise error
