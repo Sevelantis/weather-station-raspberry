@@ -1,5 +1,11 @@
 '''
-This module reads data from RPi sensors - real-time
+Creates and starts:
+    - Threads for sensor instances - sensors notifes theirs observers.
+    - Publisher that publishses data via the MQTT broker. Indexes the message with topic.
+    - Catcher that catches published data via topic subscribtion, then sends the data to Influxdb server.
+
+In order to clean exit SIGINT signal is being watched.
+Whenever SIGINT is detected during the run, the app starts to perform clean exit - every thread does its clean quit.
 '''
 from transmitter.publisher import Publisher
 from transmitter.sensors.hygrometer import Hygrometer
@@ -18,8 +24,6 @@ if __name__ == '__main__':
     catcher.start()
 
     sensors = [Magnetometer(HMC_observers=[logger]), Gas_sensor(MQ_observers=[logger]), Ultrasonic(), Hygrometer(), Barometer(), Thermometer()]
-    # sensors = [Magnetometer(HMC_observers=[logger]), Thermometer()]
-
 
     # run devices threads
     for sensor in sensors:
