@@ -22,7 +22,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1631827353229,
+  "iteration": 1632509750715,
   "links": [],
   "panels": [
     {
@@ -155,7 +155,7 @@
             "mode": "continuous-GrYlRd"
           },
           "custom": {
-            "axisLabel": "Temperature [°C]",600
+            "axisLabel": "Temperature [°C]",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -182,7 +182,7 @@
               "mode": "off"
             }
           },
-          "decimals": 1,
+          "decimals": 2,
           "displayName": "temperature",
           "mappings": [],
           "thresholds": {
@@ -299,7 +299,7 @@
               "mode": "off"
             }
           },
-          "decimals": 1,
+          "decimals": 2,
           "displayName": "Temperature",
           "mappings": [],
           "thresholds": {
@@ -828,8 +828,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 19,
-        "w": 8,
+        "h": 26,
+        "w": 7,
         "x": 0,
         "y": 22
       },
@@ -1004,9 +1004,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 19,
+        "h": 26,
         "w": 8,
-        "x": 8,
+        "x": 7,
         "y": 22
       },
       "id": 25,
@@ -1074,7 +1074,8 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "text",
+            "mode": "fixed"
           },
           "custom": {
             "axisLabel": "Smoke [ppm]",
@@ -1082,7 +1083,7 @@
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 16,
-            "gradientMode": "scheme",
+            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -1119,7 +1120,7 @@
                 "value": 355
               },
               {
-                "color": "dark-green",
+                "color": "semi-dark-green",
                 "value": 400
               },
               {
@@ -1161,9 +1162,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 19,
-        "w": 8,
-        "x": 16,
+        "h": 26,
+        "w": 9,
+        "x": 15,
         "y": 22
       },
       "id": 26,
@@ -1225,6 +1226,219 @@
       ],
       "title": "GAS - Smoke",
       "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Direction [°]",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "degree"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 48
+      },
+      "id": 28,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "alias": "x",
+          "groupBy": [
+            {
+              "params": [
+                "7s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/MAG",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "x"
+            }
+          ]
+        },
+        {
+          "alias": "y",
+          "groupBy": [
+            {
+              "params": [
+                "7s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/MAG",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "y"
+            }
+          ]
+        },
+        {
+          "alias": "z",
+          "groupBy": [
+            {
+              "params": [
+                "7s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/MAG",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "type",
+              "operator": "=",
+              "value": "z"
+            }
+          ]
+        }
+      ],
+      "title": "MAG - magnetometer",
+      "type": "timeseries"
     }
   ],
   "refresh": "5s",
@@ -1261,12 +1475,12 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "WS",
   "uid": "v--ARDigk",
-  "version": 65
+  "version": 72
 }
