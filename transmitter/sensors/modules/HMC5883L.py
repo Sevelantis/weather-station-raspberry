@@ -1,39 +1,47 @@
 import math
 from . import i2c
+import RPi.GPIO as GPIO
+import smbus2
 from time import *
 from observers.observable import Observable
 
 class HMC5883L(Observable):
 	
-	ConfigurationRegisterA 		= 0x00
-	ConfigurationRegisterB 		= 0x01
-	ModeRegister 				= 0x02
-	AxisXDataRegisterMSB 		= 0x03
-	AxisXDataRegisterLSB 		= 0x04
-	AxisZDataRegisterMSB 		= 0x05
-	AxisZDataRegisterLSB 		= 0x06
-	AxisYDataRegisterMSB 		= 0x07
-	AxisYDataRegisterLSB 		= 0x08
-	StatusRegister 				= 0x09
-	IdentificationRegisterA 	= 0x10
-	IdentificationRegisterB 	= 0x11
-	IdentificationRegisterC 	= 0x12
-	MeasurementContinuous 		= 0x00
-	MeasurementSingleShot 		= 0x01
-	MeasurementIdle 		= 0x03
+	configuration_reg_A 		= 0x00
+	configuration_reg_B 		= 0x01
+	mode_reg 				= 0x02
+	axis_x_data_register_MSB 	= 0x03
+	axis_x_data_register_LSB 		= 0x04
+	axis_z_data_register_MSB 		= 0x05
+	axis_z_data_register_LSB 		= 0x06
+	axis_y_data_register_MSB 		= 0x07
+	axis_y_data_register_LSB 		= 0x08
+	status_reg 				= 0x09
+	identification_reg_A 	= 0x10
+	identification_reg_B 	= 0x11
+	identification_reg_C 	= 0x12
+	measurement_continuous 		= 0x00
+	measurement_single_shot 	= 0x01
+	measurement_idle 		= 0x03
 	
 	def __init__(self, port=0, addr=0x1e, gauss=1.3, observers = []):
 		Observable.__init__(self, observers=observers)
+		
 		self.bus = i2c.i2c(port, addr)
-		self.setScale(gauss)
-		self.setContinuousMode()
-		self.setDeclination(2, 15)
+		self.set_scale(gauss)
+		self.set_continuous_mode()
+		self.set_declination(2, 15)
 		self.notify_observers(f'HMC5883L: Init Device.')
 		
-	def setContinuousMode(self):
-		self.setOption(self.ModeRegister, self.MeasurementContinuous)
+	def close(self) -> None:
+		self.remove_option(self.mode_reg, self.measurement_continuous)
+		self.set_option(self.mode_reg, self.measurement_idle)
+		self.bus.close()
+
+	def set_continuous_mode(self):
+		self.set_option(self.mode_reg, self.measurement_continuous)
 		
-	def setScale(self, gauss):
+	def set_scale(self, gauss):
 		if gauss == 0.88:
 			self.scale_reg = 0x00
 			self.scale = 0.73
@@ -60,43 +68,42 @@ class HMC5883L(Observable):
 			self.scale = 4.35
 		
 		self.scale_reg = self.scale_reg << 5
-		self.setOption(self.ConfigurationRegisterB, self.scale_reg)
+		self.set_option(self.configuration_reg_B, self.scale_reg)
 		
-	def setDeclination(self, degree, min = 0):
+	def set_declination(self, degree, min = 0):
 		self.declinationDeg = degree
 		self.declinationMin = min
 		self.declination = (degree+min/60) * (math.pi/180)
 		
-	def setOption(self, register, *function_set):
+	def set_option(self, register, *function_set):
 		options = 0x00
 		for function in function_set:
 			options = options | function
 		self.bus.write_byte(register, options)
 		
 	# Adds to existing options of register	
-	def addOption(self, register, *function_set):
+	def add_option(self, register, *function_set):
 		options = self.bus.read_byte(register)
 		for function in function_set:
 			options = options | function
 		self.bus.write_byte(register, options)
 		
 	# Removes options of register	
-	def removeOption(self, register, *function_set):
+	def remove_option(self, register, *function_set):
 		options = self.bus.read_byte(register)
 		for function in function_set:
 			options = options & (function ^ 0b11111111)
 		self.bus.write_byte(register, options)
 		
-	def getDeclination(self):
+	def get_declination(self):
 		return (self.declinationDeg, self.declinationMin)
 	
-	def getDeclinationString(self):
+	def get_declination_str(self):
 		return str(self.declinationDeg)+"\u00b0 "+str(self.declinationMin)+"'"
 	
 	# Returns heading in degrees and minutes
-	def getHeading(self):
-		(scaled_x, scaled_y, scaled_z) = self.getAxes()
-		
+	def get_heading(self):
+		(scaled_x, scaled_y, scaled_z) = self.get_axes()
 		headingRad = math.atan2(scaled_y, scaled_x)
 		headingRad += self.declination
 
@@ -114,12 +121,15 @@ class HMC5883L(Observable):
 		minutes = round(((headingDeg - degrees) * 60))
 		return (degrees, minutes)
 	
-	def getHeadingString(self):
-		(degrees, minutes) = self.getHeading()
+	def get_heading_str(self):
+		(degrees, minutes) = self.get_heading()
 		return str(degrees)+"\u00b0 "+str(minutes)+"'"
 		
-	def getAxes(self):
-		(magno_x, magno_z, magno_y) = self.bus.read_3s16int(self.AxisXDataRegisterMSB)
+	def get_axes(self):
+		read = self.bus.read_3s16int(self.axis_x_data_register_MSB)
+		if not read:
+		 	return (0,0,0)
+		(magno_x, magno_z, magno_y) = read
 
 		if (magno_x == -4096):
 			magno_x = None
