@@ -17,6 +17,7 @@ class Sensor(Thread, Observable):
                 logging.info(f'{self.name}: Exiting thread, SIGINT detected.')
                 self.running = False
                 break
+        logging.info(f"{self.name}: Thread exited.")
         
     def build_message(self, type, value, logging_stage=None) -> Message:
         return Message(topic=self.topic, sensor_id=self.sensor_id, location=self.location, type=type, value=value, logging_stage=logging_stage)
