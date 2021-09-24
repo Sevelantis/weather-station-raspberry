@@ -2,8 +2,8 @@ from enum import Enum
 from DTO.dto import DTO
 
 class LoggingStage(Enum):
-    COLLECTED = 'COLLECTED'
-    SENT = 'SENT'
+    COLLECTED = 'collected'
+    SENT = 'sent'
     RECEIVED = 'msg'
 
 class Message(DTO):
