@@ -10,7 +10,7 @@ PINOUT:
 
 Inserted 10K Ohm pull-up resistor binding together VCC and SIG.
 '''
-import time
+import logging
 import board
 import adafruit_dht
 import RPi.GPIO as GPIO
@@ -38,13 +38,12 @@ class Hygrometer(Sensor):
                     ('humidity', humidity)
                 ]
         except RuntimeError as error:
-            print(error.args[0])
+            logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
             self.dev.exit()
-            print(error)
+            logging.info(f"{self.name}: {error}")
             raise error
 
     def run(self) -> None:
         super().run()
         self.dev.exit()
-        print('_________________________________________________________________')
