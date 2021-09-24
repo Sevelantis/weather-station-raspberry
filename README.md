@@ -21,6 +21,13 @@
     - Prometheus - host metrics
   - Grafana is the endpoint of the stack and has some dashboards created in order to visualise received data:
 
+### RPi automation:
+Start application on every RPi boot  
+```
+crontab -l
+@reboot /home/pi/weather-station/start.sh > /var/log/crontab/cronboot.log 2>&1
+```
+
 ## Gas sensor Dashboard
 ![Alt text](/readme-files/gas-sensor-grafana-timelapse.gif?raw=true "CH4 / CO / CO2")
 ## Other sensors Dashboard:
