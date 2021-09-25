@@ -65,6 +65,8 @@ class Gas_sensor(Sensor):
                     ('CO',  float(perc['CO'])),
                     ('CO2', float(perc['CO2']))
                 ]
+            else:
+                logging.info(f"{self.name}: No data returned.")
         except RuntimeError as error:
             logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:

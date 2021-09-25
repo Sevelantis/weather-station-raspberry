@@ -36,6 +36,8 @@ class Thermometer(Sensor):
                 return [
                     ('temperature', temperature)
                 ]
+            else:
+                logging.info(f"{self.name}: No data returned.")
         except RuntimeError as error:
             logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:

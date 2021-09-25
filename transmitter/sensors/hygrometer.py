@@ -37,6 +37,8 @@ class Hygrometer(Sensor):
                     ('temperature', temperature),
                     ('humidity', humidity)
                 ]
+            else:
+                logging.info(f"{self.name}: No data returned.")
         except RuntimeError as error:
             logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
