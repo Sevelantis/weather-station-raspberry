@@ -18,7 +18,7 @@ class MQ(Observable):
                                             # which is derived from the chart in datasheet
  
     ######################### Software Related Macros #########################
-    CALIBARAION_SAMPLE_TIMES     = 50       # define how many samples you are going to take in the calibration phase
+    CALIBARAION_SAMPLE_TIMES     = 10       # define how many samples you are going to take in the calibration phase
     CALIBRATION_SAMPLE_INTERVAL  = 500      # define the time interval(in milisecond) between each samples in the
                                             # cablibration phase
     READ_SAMPLE_INTERVAL         = 50       # define the time interval(in milisecond) between each samples in

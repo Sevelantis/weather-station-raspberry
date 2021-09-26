@@ -24,13 +24,6 @@ class Magnetometer(Sensor):
         self.location = 'Wrocław'
         self.HMC_observers = HMC_observers
 
-    def run(self):
-        # Init Device
-        self.dev = HMC5883L(port=0, observers=self.HMC_observers)
-        super().run()
-        # close i2c
-        self.dev.close()
-
     def get_sensor_data(self):
         try:
             (x, y, z) = self.dev.get_axes()
@@ -48,3 +41,15 @@ class Magnetometer(Sensor):
         except Exception as error:
             logging.info(f"{self.name}: {error}")
             raise error
+
+    def run(self):
+        # Init Device
+        try:
+            self.dev = HMC5883L(port=0, observers=self.HMC_observers)
+        except Exception as e:
+            logging.info(f'{self.name}: Init failed, reason: {e}')
+        super().run()
+        # close i2c
+        if self.dev:
+            self.dev.close()
+            logging.info(f'{self.name}: I2C device cleaned.')

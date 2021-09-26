@@ -58,7 +58,10 @@ class Gas_sensor(Sensor):
 
     def get_sensor_data(self):
         try:
-            perc = self.dev.MQPercentage()
+            if self.dev:
+                perc = self.dev.MQPercentage()
+            else:
+                logging.error(f'{self.name}: No device found.')
             if perc['CO'] and perc['CO2'] and perc['LPG']:
                 return [
                     ('LPG', float(perc['LPG'])),
@@ -68,13 +71,16 @@ class Gas_sensor(Sensor):
             else:
                 logging.info(f"{self.name}: No data returned.")
         except RuntimeError as error:
-            logging.info(f"{self.name}: {error.args[0]}")
+            logging.error(f"{self.name}: {error.args[0]}")
         except Exception as error:
-            logging.info(f"{self.name}: {error}")
-            self.dev.exit()
-            raise error
+            logging.error(f"{self.name}: {error}")
 
     def run(self):
         # Init Device
-        self.dev = MQ(analogPin=0, observers=self.MQ_observers)
+        try:
+            self.dev = MQ(analogPin=0, observers=self.MQ_observers)
+        except Exception as e:
+            logging.info(f'{self.name}: Init failed, reason: {e}')
+            raise e
         super().run()
+            

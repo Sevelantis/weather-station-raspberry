@@ -22,13 +22,6 @@ class Thermometer(Sensor):
         self.sensor_id = self.name
         self.location = 'Wrocław'
             
-    def run(self) -> None:
-        try:
-            self.dev = W1ThermSensor()
-        except Exception as e:
-            logging.info(f'{self.name}: Thermometer init failed.')
-        super().run()
-
     def get_sensor_data(self):
         try:
             temperature = self.dev.get_temperature()
@@ -44,3 +37,10 @@ class Thermometer(Sensor):
             logging.info(f"{self.name}: {error}")
             self.dev.exit()
             raise error
+
+    def run(self) -> None:
+        try:
+            self.dev = W1ThermSensor()
+        except Exception as e:
+            logging.info(f'{self.name}: Init failed, reason: {e}')
+        super().run()

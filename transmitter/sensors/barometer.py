@@ -22,9 +22,6 @@ class Barometer(Sensor):
         self.sensor_id = self.name
         self.location = 'Wrocław'
 
-        # Init Device
-        i2c = board.I2C()       
-        self.dev = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address = 0x76)
 
     def get_sensor_data(self):
         try:
@@ -43,3 +40,12 @@ class Barometer(Sensor):
             logging.info(f"{self.name}: {error}")
             self.dev.exit()
             raise error
+
+    def run(self)->None:
+        # Init Device
+        try:      
+            i2c = board.I2C() 
+            self.dev = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address = 0x76)
+        except Exception as e:
+            logging.info(f'{self.name}: Init failed, reason: {e}')
+        super().run()

@@ -25,9 +25,6 @@ class Hygrometer(Sensor):
         self.sensor_id = self.name
         self.location = 'Wrocław'
 
-        # Init Device
-        self.dev = adafruit_dht.DHT11(board.D23)
-
     def get_sensor_data(self):
         try:
             temperature = self.dev.temperature
@@ -47,5 +44,13 @@ class Hygrometer(Sensor):
             raise error
 
     def run(self) -> None:
+        # Init Device
+        try:
+            self.dev = adafruit_dht.DHT11(board.D23)
+        except Exception as e:
+            logging.info(f'{self.name}: Init failed, reason: {e}')
+        
         super().run()
-        self.dev.exit()
+        if self.dev:
+            self.dev.exit()
+            logging.info(f'{self.name}: PulseIO cleaned.')
