@@ -37,6 +37,7 @@ services:
             - '3000:3000'
         user: root
         restart: always
+        depends_on: influxdb
 
     node-exporter:
         container_name: node-exporter
