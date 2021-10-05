@@ -41,14 +41,13 @@ done
 
 if [[ ${IGNORE_DOCKER} = false ]]; then
     # down
-    # /usr/local/bin/docker-compose -f /home/pi/weather-station/docker-compose.yml down
+    /usr/local/bin/docker-compose -f /home/pi/weather-station/docker-compose.yml down
 
     # up
-    # /usr/local/bin/docker-compose -f /home/pi/weather-station/docker-compose.yml up -d
+    /usr/local/bin/docker-compose -f /home/pi/weather-station/docker-compose.yml up -d
 
     # get influxdb local IP
     host=$(get_pod_ip influxdb)
-    echo "host = $host"
     while [ ! -n "${host}" ]; do
         host=$(get_pod_ip influxdb)
         echo "Waiting for pod ip.. host=$host"
