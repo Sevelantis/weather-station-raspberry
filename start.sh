@@ -24,8 +24,12 @@ function is_influxdb_visible()
         echo 1
     fi
 }
-
+CRON_LOGFILE="/var/log/mycron.log"
+{
 IGNORE_DOCKER=false
+
+echo "_________start.sh started___________"
+
 while getopts "hr" OPT; do
     case ${OPT} in
         h)
@@ -58,8 +62,7 @@ if [[ ${IGNORE_DOCKER} = false ]]; then
     port="8086"
 
     while [ $(is_influxdb_visible $host $port) -ne 0 ]; do
-        echo "host=$host, port=$port"
-        echo "waiting for influxdb.."
+        echo "trying host=$host, port=$port... -> waiting for influxdb.."
         sleep 2
     done
     echo $(nc -vz "${host}" "${port}")
@@ -77,6 +80,15 @@ PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep 24 | awk '{print$2}')
 PID=$(ps auxf | grep entrypoint.py | grep python | awk '{print$2}')
 [ ! -z $PID ] && kill $PID
 
-# /usr/bin/python3 /home/pi/weather-station/entrypoint.py > /home/pi/weather-station/aa 2>&1 &
+echo "Starting app.."
+/usr/bin/python3 /home/pi/weather-station/entrypoint.py >> /home/pi/weather-station/logs/app.log 2>&1 &
 
-ps auxf | grep entrypoint.py | grep python
+ret=$?
+echo "App started with code: $ret"
+if [ $ret -eq 0 ]; then
+    echo "____________start.sh COMPLETED_____________"
+else
+    echo "____________start.sh FAILED_____________"
+fi
+
+} >> $CRON_LOGFILE 2>&1
