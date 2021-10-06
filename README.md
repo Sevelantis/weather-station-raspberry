@@ -25,7 +25,9 @@
 Start application on every RPi boot  
 ```
 crontab -l
-@reboot /home/pi/weather-station/start.sh > /var/log/crontab/cronboot.log 2>&1
+@reboot /home/pi/weather-station/start.sh
+0 2 * * * /home/pi/weather-station/start.sh -r
+
 ```
 
 ## Gas sensor Dashboard
