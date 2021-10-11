@@ -71,9 +71,13 @@ class MQ(Observable):
     #          could be derived.
     ############################################################################ 
     def MQResistanceCalculation(self, raw_adc):
-        return float(self.RL_VALUE*(self.MAX_MILI_VOLTAGE-raw_adc)/float(raw_adc))
-     
-     
+        try:
+            return float(self.RL_VALUE*(self.MAX_MILI_VOLTAGE-raw_adc)/float(raw_adc))
+        except Exception as e:
+            self.notify_observers(f"MQ: 0V voltage detected - division by 0. Check wiring and reboot.")
+        finally:
+            return float(self.RL_VALUE*(self.MAX_MILI_VOLTAGE-raw_adc)/float(1))
+
     ######################### MQCalibration ####################################
     # Input:   mq_pin - analog channel
     # Output:  Ro of the sensor

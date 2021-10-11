@@ -39,9 +39,7 @@ class Hygrometer(Sensor):
         except RuntimeError as error:
             logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
-            self.dev.exit()
             logging.info(f"{self.name}: {error}")
-            raise error
 
     def run(self) -> None:
         # Init Device

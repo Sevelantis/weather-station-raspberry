@@ -39,8 +39,6 @@ class Ultrasonic(Sensor):
             logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
             logging.info(f"{self.name}: {error}")
-            self.dev.exit()
-            raise error
 
     def run(self) -> None:
         # Init Device
