@@ -15,7 +15,7 @@ class Sensor(Thread, Observable):
 
     def read_data(self) -> None:
         sensor_data = self.get_sensor_data()
-        time.sleep(1.0)
+        time.sleep(2)
         if sensor_data:
             for type, value in sensor_data:
                 self.notify_observers(self.build_message(type=type, value=value, logging_stage=LoggingStage.COLLECTED.value))

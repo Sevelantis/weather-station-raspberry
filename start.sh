@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -eux
 
 function print_help () {
     echo "This script allows to start docker containers and app - automation purposes."
@@ -28,7 +28,7 @@ CRON_LOGFILE="/var/log/mycron.log"
 {
 IGNORE_DOCKER=false
 
-echo "_________start.sh started___________"
+echo "_________"$(date)"___________"
 
 while getopts "hr" OPT; do
     case ${OPT} in
