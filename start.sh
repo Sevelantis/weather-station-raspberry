@@ -1,4 +1,4 @@
-#!/bin/bash -eux
+#!/bin/bash -eu
 
 function print_help () {
     echo "This script allows to start docker containers and app - automation purposes."
