@@ -27,7 +27,9 @@ function is_influxdb_visible()
 CRON_LOGFILE="/var/log/mycron.log"
 {
 IGNORE_DOCKER=false
+DEBUG_MODE=false
 
+echo "==================================================="
 echo "_________"$(date)"___________"
 
 while getopts "hr" OPT; do
@@ -39,16 +41,21 @@ while getopts "hr" OPT; do
         r)
             echo "Ignoring Docker.."
             IGNORE_DOCKER=true
-            ;;    
+            ;;
+        d)
+            echo "setting debug mode.."
+            DEBUG_MODE=true
+            ;;
     esac
 done
 
 if [[ ${IGNORE_DOCKER} = false ]]; then
+    DOCKER_COMPOSE_EXE="/home/pi/weather-station/venv/bin/docker-compose"
     # down
-    /usr/local/bin/docker-compose -f /home/pi/weather-station/docker-compose.yml down
+    $DOCKER_COMPOSE_EXE -f /home/pi/weather-station/docker-compose.yml down
 
     # up
-    /usr/local/bin/docker-compose -f /home/pi/weather-station/docker-compose.yml up -d
+    $DOCKER_COMPOSE_EXE -f /home/pi/weather-station/docker-compose.yml up -d
 
     # get influxdb local IP
     host=$(get_pod_ip influxdb)
@@ -80,8 +87,17 @@ PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep 24 | awk '{print$2}')
 PID=$(ps auxf | grep entrypoint.py | grep python | awk '{print$2}')
 [ ! -z $PID ] && kill $PID
 
-echo "Starting app.."
-/usr/bin/python3 /home/pi/weather-station/entrypoint.py >> /home/pi/weather-station/logs/app.log 2>&1 &
+echo "Activating python venv.."
+/home/pi/weather-station/venv/bin/activate
+
+echo "Running app..."
+PYTHON_EXE="/home/pi/weather-station/venv/bin/python3"
+
+if [[ $DEBUG_MODE = false ]]; then
+    $PYTHON_EXE /home/pi/weather-station/entrypoint.py >> /home/pi/weather-station/logs/app.log 2>&1 &
+else
+    $PYTHON_EXE /home/pi/weather-station/entrypoint.py
+fi
 
 ret=$?
 echo "App started with code: $ret"
@@ -90,5 +106,6 @@ if [ $ret -eq 0 ]; then
 else
     echo "____________start.sh FAILED_____________"
 fi
+echo "==================================================="
 
 } >> $CRON_LOGFILE 2>&1

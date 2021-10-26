@@ -1,0 +1,3 @@
+[console_scripts]
+w1thermsensor = w1thermsensor.cli:cli
+
