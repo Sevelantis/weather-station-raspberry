@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 5,
-  "iteration": 1635264881927,
+  "iteration": 1635276775322,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -150,6 +150,42 @@
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                24
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "Thermometer alert! Temperature is over 24[°C]. Good luck!",
+        "name": "THE - temperature alert - temperature is over 24[°C]",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -261,6 +297,14 @@
               "value": "temperature"
             }
           ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 24,
+          "visible": true
         }
       ],
       "title": "THE - temperature",
@@ -380,10 +424,48 @@
           ]
         }
       ],
+      "thresholds": [],
       "title": "BAR - temperature",
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                45,
+                75
+              ],
+              "type": "outside_range"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "Hygrometer sensor alert! Humidity has dramatically changed! Good luck.",
+        "name": "HYG - humidity alert - humidity has dramatically changed!",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "datasource": null,
       "description": "",
       "fieldConfig": {
@@ -477,7 +559,7 @@
           "policy": "default",
           "query": "SELECT mean(\"value\") FROM \"/HYG\" WHERE (\"type\" = 'humidity') AND $timeFilter GROUP BY time(10s) fill(null)",
           "rawQuery": false,
-          "refId": "humidiy",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -502,10 +584,61 @@
           ]
         }
       ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 45,
+          "visible": true
+        },
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 75,
+          "visible": true
+        }
+      ],
       "title": "HYG - humidity",
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                998,
+                1018
+              ],
+              "type": "outside_range"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "Barometer sensor alert! Pressure has dramatically changed! Good luck.",
+        "name": "BAR - pressure alert - pressure had dramatically changed!",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -619,10 +752,60 @@
           ]
         }
       ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 998,
+          "visible": true
+        },
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 1018,
+          "visible": true
+        }
+      ],
       "title": "BAR - pressure",
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                3
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "Ultrasonic sensor alert! Object is closer than 3[cm]! Good luck.",
+        "name": "ULT - Distance alert - object is very close alert!",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -752,6 +935,14 @@
               "value": "distance"
             }
           ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 3,
+          "visible": true
         }
       ],
       "title": "ULT - Distance",
@@ -1285,6 +1476,42 @@
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                2000
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "Gas sensor alert! Smoke is over 2000.0[ppm]. Good luck!",
+        "name": "GAS - Smoke alert - smoke is over 2000[ppm]!",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "datasource": null,
       "fieldConfig": {
         "defaults": {
@@ -1439,11 +1666,19 @@
           ]
         }
       ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 2000,
+          "visible": true
+        }
+      ],
       "title": "GAS - Smoke",
       "type": "timeseries"
     }
   ],
-  "refresh": "5s",
+  "refresh": "",
   "schemaVersion": 31,
   "style": "dark",
   "tags": [],
@@ -1487,5 +1722,6 @@
   "timezone": "",
   "title": "sensors",
   "uid": "v--ARDigk",
-  "version": 3
+  "version": 47
 }
+

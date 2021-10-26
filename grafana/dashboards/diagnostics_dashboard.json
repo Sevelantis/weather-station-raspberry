@@ -20,10 +20,11 @@
   },
   "description": "【English version】Support Node Exporter v0.16 and above.Optimize the main metrics display. Includes: CPU, memory, disk IO, network, temperature and other monitoring metrics。https://github.com/starsliao/Prometheus",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 11952,
   "graphTooltip": 0,
-  "id": 7,
-  "iteration": 1631827511913,
+  "id": 4,
+  "iteration": 1635277159581,
   "links": [
     {
       "asDropdown": false,
@@ -65,6 +66,7 @@
       "url": "https://starsl.cn"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "cacheTimeout": null,
@@ -134,7 +136,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "expr": "sum(time() - node_boot_time_seconds{instance=~\"$node\"})",
@@ -216,7 +218,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "expr": "sum(node_memory_MemTotal_bytes{instance=~\"$node\"})",
@@ -283,7 +285,7 @@
         "showUnfilled": true,
         "text": {}
       },
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "exemplar": true,
@@ -731,7 +733,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "expr": "sum(count(node_cpu_seconds_total{instance=~\"$node\", mode='system'}) by (cpu))",
@@ -813,7 +815,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "expr": "avg(irate(node_cpu_seconds_total{instance=~\"$node\",mode=\"iowait\"}[30m])) * 100",
@@ -1417,6 +1419,42 @@
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                60
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "CPU Temp alert! CPU Temp is over 60[°C]! Good luck.",
+        "name": "CPU Temperature alert - temperature over 60[°C] alert!",
+        "noDataState": "keep_state",
+        "notifications": []
+      },
       "datasource": "Prometheus",
       "description": "",
       "fieldConfig": {
@@ -1553,7 +1591,15 @@
           "interval": "",
           "intervalFactor": 5,
           "legendFormat": "{{instance}}_{{chip}}_{{sensor}}",
-          "refId": "B"
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 60,
+          "visible": true
         }
       ],
       "timeFrom": null,
@@ -1635,7 +1681,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1934,7 +1980,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2072,7 +2118,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2179,7 +2225,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2304,7 +2350,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2442,7 +2488,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.2",
+      "pluginVersion": "8.2.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2518,8 +2564,8 @@
       }
     }
   ],
-  "refresh": "5s",
-  "schemaVersion": 30,
+  "refresh": "",
+  "schemaVersion": 31,
   "style": "dark",
   "tags": [
     "Prometheus",
@@ -2748,7 +2794,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "DIAGNOSTICS",
+  "title": "diagnostics",
   "uid": "rVO1JQmRz",
-  "version": 41
+  "version": 5
 }
+

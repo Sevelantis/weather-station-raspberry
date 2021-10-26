@@ -35,6 +35,13 @@ services:
             - ./grafana/data:/var/lib/grafana
         ports:
             - '3000:3000'
+        environment:
+            - 'GF_SMTP_ENABLED=true'
+            - 'GF_SMTP_HOST=${EMAIL_SMTP_SERVER}'
+            - 'GF_SMTP_USER=${EMAIL_ADDRESS}'
+            - 'GF_SMTP_PASSWORD=${EMAIL_PASSWORD}'
+            - 'GF_SMTP_FROM_ADDRESS=${EMAIL_ADDRESS}'
+            
         user: root
         restart: always
         depends_on:
