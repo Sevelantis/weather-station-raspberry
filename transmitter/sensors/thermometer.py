@@ -1,5 +1,5 @@
 '''
-DS18B20thermometer module.
+DS18B20 thermometer module.
 
 PINOUT: (FLAT SIDE IS FRONT, COUNT FROM LEFT)
     DS18| RPI
@@ -35,7 +35,8 @@ class Thermometer(Sensor):
             logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
             logging.info(f"{self.name}: {error}")
-            self.dev.exit()
+            if self.dev:
+                self.dev.exit()
             raise error
 
     def run(self) -> None:

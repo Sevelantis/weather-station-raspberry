@@ -40,7 +40,6 @@ class Magnetometer(Sensor):
             logging.info(f"{self.name}: {error.args[0]}")
         except Exception as error:
             logging.info(f"{self.name}: {error}")
-            raise error
 
     def run(self):
         # Init Device

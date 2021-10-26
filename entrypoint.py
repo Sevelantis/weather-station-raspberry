@@ -23,8 +23,8 @@ if __name__ == '__main__':
     catcher = Catcher([logger])
     catcher.start()
 
-    sensors = [Magnetometer(HMC_observers=[logger]), Gas_sensor(MQ_observers=[logger]), Ultrasonic(), Hygrometer(), Barometer(), Thermometer()]
-
+    sensors = [Gas_sensor(MQ_observers=[logger]), Magnetometer(HMC_observers=[logger]), Barometer(), Hygrometer(), Thermometer(), Ultrasonic()]
+    
     # run devices threads
     for sensor in sensors:
         sensor.add_observer(publisher)
