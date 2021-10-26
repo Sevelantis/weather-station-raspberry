@@ -24,9 +24,8 @@
 ### RPi automation:
 Start application on every RPi boot  
 ```
-crontab -l
 @reboot /home/pi/weather-station/start.sh
-0 2 * * * /home/pi/weather-station/start.sh -r
+30 */3 * * * /home/pi/weather-station/start.sh -r
 
 ```
 
