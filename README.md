@@ -5,6 +5,7 @@
   - Some external sensors (DHT11, BMP280, DS18B20, HC-SR04, MQ-2, HMC5883L)
   - Docker
   - Python
+  - Grafana's internal alerting system - SMTP/mail
  
 ### Stack:
   - Docker containers:
