@@ -50,6 +50,10 @@ while getopts "hr" OPT; do
 done
 
 if [[ ${IGNORE_DOCKER} = false ]]; then
+    # load env vars
+
+   source /root/.profile 
+
     DOCKER_COMPOSE_EXE="/home/pi/weather-station/venv/bin/docker-compose"
     # down
     $DOCKER_COMPOSE_EXE -f /home/pi/weather-station/docker-compose.yml down
