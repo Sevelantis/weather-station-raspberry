@@ -87,8 +87,8 @@ PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep -w 23 | awk '{print$2}')
 PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep -w 24 | awk '{print$2}')
 [ ! -z $PID ] && kill $PID
 
-# kill current entrypoiny.py zombie processes
-PID=$(ps auxf | grep entrypoint.py | grep python | awk '{print$2}')
+# kill current app.py zombie processes
+PID=$(ps auxf | grep app.py | grep python | awk '{print$2}')
 [ ! -z $PID ] && kill $PID
 
 echo "Activating python venv.."
@@ -98,9 +98,9 @@ echo "Running app..."
 PYTHON_EXE="/home/pi/weather-station/venv/bin/python3"
 
 if [[ $DEBUG_MODE = false ]]; then
-    $PYTHON_EXE /home/pi/weather-station/entrypoint.py >> /home/pi/weather-station/logs/app.log 2>&1 &
+    $PYTHON_EXE /home/pi/weather-station/app.py >> /home/pi/weather-station/logs/app.log 2>&1 &
 else
-    $PYTHON_EXE /home/pi/weather-station/entrypoint.py
+    $PYTHON_EXE /home/pi/weather-station/app.py
 fi
 
 ret=$?
