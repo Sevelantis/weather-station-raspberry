@@ -80,11 +80,11 @@ if [[ ${IGNORE_DOCKER} = false ]]; then
 fi
 
 # process pulsein is not letting PIN23 to free, kill it
-PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep 23 | awk '{print$2}')
+PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep -w 23 | awk '{print$2}')
 [ ! -z $PID ] && kill $PID
 
 # also pin 24 
-PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep 24 | awk '{print$2}')
+PID=$(ps auxf | grep pulseio | grep gpiochip0 | grep -w 24 | awk '{print$2}')
 [ ! -z $PID ] && kill $PID
 
 # kill current entrypoiny.py zombie processes
