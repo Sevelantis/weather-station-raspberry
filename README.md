@@ -15,11 +15,15 @@
     - Prometheus
     - Grafana
   - Python object-oriented app collects real-time sensor data'
-  - Transmitter(the app) publishes collected data through the MQTT server
-  - Receiver catches published data through the same MQTT server and sends it to InfluxDB
-  - Grafana has two data sources added:
-    - Influxdb - sensors data
-    - Prometheus - host metrics
+  - Transmitter(the app) publishes collected data using the MQTT server
+  - Receiver catches published data using the same MQTT server, the receiver sends it to InfluxDB container
+  - Grafana:
+      - Data sources:
+        - Influxdb - sensors data
+        - Prometheus - host metrics
+      - Dashboards:
+        - sensors (data from hygrometer, thermometer, barometer, gas sensor and ultrasonic length sensor)
+        - diagnostics (hardware info, CPU temp, CPU load, RAM usage, Disk/Network I/O, and more...)
   - Grafana is the endpoint of the stack and has some dashboards created in order to visualise received data:
 
 ### RPi automation:
