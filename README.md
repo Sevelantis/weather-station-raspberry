@@ -7,7 +7,7 @@
   - Python
   - Grafana's internal alerting system - SMTP/mail
  
-### Stack:
+### Techstack:
   - Docker containers:
     - MQTT
     - InfluxDB
