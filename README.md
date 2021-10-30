@@ -24,6 +24,8 @@
       - Dashboards:
         - sensors (data from hygrometer, thermometer, barometer, gas sensor and ultrasonic length sensor)
         - diagnostics (hardware info, CPU temp, CPU load, RAM usage, Disk/Network I/O, and more...)
+      - Alerts:
+        - via email - Grafana's internal alerting system using the gmail's SMTP server
   - Grafana is the endpoint of the stack and has some dashboards created in order to visualise received data:
 
 ### RPi automation:
