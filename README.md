@@ -36,9 +36,9 @@ Start application on every RPi boot
 
 ```
 
-## Gas sensor Dashboard
+## Gas sensor Chart
 ![Alt text](/readme-files/gas-sensor-grafana-timelapse.gif?raw=true "CH4 / CO / CO2")
 ## Other sensors Dashboard:
 ![Alt text](/readme-files/diagnostics-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - sensors.")
-## Host Metrics Dashboard:
+## Host Metrics (diagnostics) Dashboard:
 ![Alt text](/readme-files/sensors-grafana-timelapse.gif?raw=true "Grafana dashboard timelapse chart - Raspberry Pi Diagnostic info")
